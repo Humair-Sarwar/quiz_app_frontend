@@ -1,0 +1,87 @@
+:root{
+    --primary-color: #ff5b07;
+}
+body{
+    font-family: "Poppins", sans-serif;
+}
+.primary-button{
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.primary-button:hover{
+    background-color: #e04e00;
+}
+
+.primary-color-text{
+    color: var(--primary-color);
+}
+
+.form-container-target{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    width: 420px;
+}
+.form-container-target input{
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+}
+.form-container-target input:focus {
+  outline: none;
+  border-color: #ff5a07ab;
+  box-shadow: 0 0 2px #ff5b07;
+  transition: all 0.3s;
+}
+.active-btn-style{
+    background-color: rgb(255, 248, 245);
+    border: 1px solid #ff5b07;
+}
+
+.mobile-menu-target{
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    height: 96vh;
+    z-index: 1;
+    left: -300px;
+    transition: 0.4s;
+}
+.mobile-menu-target-show{
+    left: 10px;
+}
+.mobile-menu-target .close-btn{
+    background-color: #cccccc8c;
+    border-radius: 50%;
+    padding: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: black;
+}
+.mobile-menu-target .close-btn:hover{
+    background-color: #e04e00;
+    color: white;
+}
+.overlay{
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.286);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.mobile-menu-btn{
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: none;
+    cursor: pointer;
+}
