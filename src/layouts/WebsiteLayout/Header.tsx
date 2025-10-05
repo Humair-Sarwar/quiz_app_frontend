@@ -3,6 +3,8 @@ import { HiOutlineLightBulb } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { MdOutlineMenu } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
+import Overlay from "../../components/Overlay";
 
 const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -26,15 +28,16 @@ const Header: React.FC = () => {
                 <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <a href="">Categories</a>
+                <NavLink to="/categories">Categories</NavLink>
               </li>
               <li>
                 <a href="">FAQs</a>
               </li>
             </ul>
           </nav>
-          <div>
-            <NavLink to="/login" className="mr-5 p-[10px 20px] inline-block">
+          <div className="flex items-center gap-2">
+            <FaRegUser className="text-[20px]"/>
+            <NavLink to="/login" className="p-[10px 20px] inline-block">
               Log in
             </NavLink>
             <NavLink to="/join-now" className="primary-button">
@@ -80,7 +83,7 @@ const Header: React.FC = () => {
           </ul>
         </nav>
       </div>
-      {showMenu && <div className="overlay w-full"></div>}
+      {showMenu && <Overlay/>}
     </>
   );
 };

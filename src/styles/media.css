@@ -7,5 +7,20 @@
     .mobile-menu-btn{
         display: inline-block;
     }
+    .slide-carousol-service-box-set .react-multiple-carousel__arrow--left, .slide-carousol-service-box-set .react-multiple-carousel__arrow--right{
+        opacity: 1;
+    }
+}
 
+
+@media(max-width: 767px){
+    .slide-text-section .scroller_item_1 li h3{
+        font-size: 2.5rem;
+    }
+}
+
+@media(max-width: 500px){
+    .slide-text-section .scroller_item_1 li h3{
+        font-size: 1.5rem;
+    }
 }
