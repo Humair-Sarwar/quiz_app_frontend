@@ -33,17 +33,17 @@ const QuizPopup: React.FC = () => {
   return (
     <>
       {/* Background overlay with fade-in */}
-      <Overlay />
+      <Overlay isVisible={isVisible}/>
 
       {/* Popup container */}
       <div
-        className={`fixed inset-0 flex items-center justify-center px-4 z-50 transition-all duration-500 ease-out ${
+        className={`fixed inset-0 flex items-center justify-center py-5 px-4 z-50 transition-all duration-500 ease-out ${
           isVisible
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-90 translate-y-10"
         }`}
       >
-        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-2xl relative transition-all duration-500 ease-in-out">
+        <div className="bg-white overflow-y-auto max-h-[100%]  rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-2xl relative transition-all duration-500 ease-in-out">
           {!isFinished ? (
             <>
               <div className="mb-4">
