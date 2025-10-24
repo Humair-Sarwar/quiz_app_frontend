@@ -1,13 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightBulb } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdPermMedia } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa6";
-import { MdMarkEmailRead } from "react-icons/md";
 import { FaUserCog } from "react-icons/fa";
-import { IoSettingsSharp } from "react-icons/io5";
+import { IoLogOutOutline, IoSettingsSharp } from "react-icons/io5";
 import Overlay from "../../components/Overlay";
 import { IoClose } from "react-icons/io5";
 
@@ -34,10 +33,16 @@ const sidebarConstants = [
     icon: <FaUsers className="text-[20px]" />
 ,
   },
-  {
-    title: "Email Templates",
-    url: "/admin/email-templates",
-    icon: <MdMarkEmailRead className="text-[20px]" />
+//   {
+//     title: "Email Templates",
+//     url: "/admin/email-templates",
+//     icon: <MdMarkEmailRead className="text-[20px]" />
+// ,
+//   },
+{
+    title: "Media",
+    url: "/admin/media",
+    icon: <MdPermMedia className="text-[20px]" />
 ,
   },
   {
@@ -82,6 +87,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({showHideSidebar, handlehideS
         <h5 className="text-[13px] ms-2 font-semibold">Admin</h5>
         <ul>
           {sidebarConstants?.map((list) => (
+            <>
             <li>
               <NavLink
                 to={list?.url}
@@ -107,7 +113,32 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({showHideSidebar, handlehideS
                 {list?.icon} {list?.title}
               </NavLink>
             </li>
+
+
+
+
+
+</>
+
           ))}
+
+           <li>
+              <NavLink
+                to={''}
+                onClick={handlehideSidebar}
+                className={({ isActive }) =>
+    `text-[16px] transition-all flex items-center gap-2 rounded-[10px] py-2 px-3 mb-1 border-1 border-transparent ${
+      isActive
+        ? " bg-[#ff5b07] text-white "
+        : "hover:bg-[rgb(255, 248, 245)] hover:text-black hover:border-1 hover:border-[#ff5b07]"
+    }`
+  }
+
+              >
+                <IoLogOutOutline className="text-[20px]" />
+              Logout
+              </NavLink>
+            </li>
         </ul>
       </div>
       {showHideSidebar && <Overlay isVisible={showHideSidebar ? true : false}/>}

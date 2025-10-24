@@ -7,6 +7,9 @@ import { IoCameraSharp } from "react-icons/io5";
 import "react-phone-input-2/lib/style.css";
 import { IoMdAdd } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import { motion, AnimatePresence } from "framer-motion";
+import CategoriesPanel from "./CategoriesPanel";
+
 
 interface AddUpdateQuizProps {
   handleClosePopup: () => void;
@@ -43,6 +46,14 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
   component_type,
 
 }) => {
+
+
+ const [categoryPanelHS, setCategoryPanelHS] = useState<boolean>(false);
+  const handleClosePopupHS = () => {
+    setCategoryPanelHS(false);
+  };
+
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [addQuiz, setAddQuiz] = useState<AddQuiz>({
@@ -244,17 +255,27 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
               </div>
 
               <div className="md:col-span-4">
-                <button type="button" className="mini-primary-button w-full">
+                <button type="button" onClick={()=> setCategoryPanelHS(true)} className="mini-primary-button w-full">
                   Select Category
                 </button>
               </div>
               <hr className="w-full md:col-span-4 text-gray-300" />
+               <AnimatePresence initial={false}>
               {addQuiz?.question_group?.map((qu_group, i)=>(
                 <>
-                 <div className="md:col-span-4">
-                <h3 className="text-nowrap font-semibold">
+                <div className="md:col-span-4">
+                  <div className="flex justify-between items-center"><h3 className="text-nowrap font-semibold">
                   Set New Question Group ({i + 1})
                 </h3>
+                <button onClick={()=>(
+                  setAddQuiz((prev)=>(
+                    {...prev, question_group: prev.question_group.filter((_, indx)=>(
+                      indx != i
+                    ))}
+                  ))
+                )} type="button" className="border-1 cursor-pointer border-red-700 text-red-700 rounded-[5px] p-[2px]"><IoClose />
+</button></div>
+                
               </div>
               <div className="md:col-span-1">
                 <label htmlFor={`question_title${i}`} className="block">
@@ -352,86 +373,140 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
               <div className="md:col-span-4">
                 <h3 className="text-nowrap font-semibold">Options</h3>
               </div>
-                {qu_group?.options?.map((_, index)=>(
-                    <>
-                     <div className="md:col-span-2">
-                <label htmlFor={`option_label${index}${i}`} className="block">
-                  Option Label ({index + 1}):
-                </label>
-                <input
-                  type="text"
-                  name="option_label"
-                  id={`option_label${index}${i}`}
-                  className="mt-1 input-target-set-field w-full"
-                  placeholder="Enter Label"
-                  value={addQuiz.question_group[i].options[index].option_label}
-                  onChange={(e)=>(
-                    setAddQuiz((prev)=>(
-                        {...prev, question_group: prev.question_group.map((qg, idxx)=>(
-                            idxx == i ? {...qg, options: qg.options.map((op,iidd)=>(
-                                iidd == index ? {...op, option_label: e.target.value} : op
-                            ))} : qg
-                        ))} 
-                    ))
-                  )}
-                />
-              </div>
-              <div className="md:col-span-1">
-                <label htmlFor={`option_sort_order${i}${index}`} className="block">
-                  Sort Order:
-                </label>
-                <input
-                  type="number"
-                  id={`option_sort_order${i}${index}`}
-                  className="mt-1 input-target-set-field w-full"
-                  placeholder="Sort Order"
-                  value={addQuiz.question_group[i].options[index].option_sort_order}
-                  onChange={(e)=> (
-                    setAddQuiz((prev)=>(
-                        {...prev, question_group: prev.question_group.map((qg, idxx)=>(
-                            idxx == i ? {...qg, options: qg.options.map((op, iidd)=>(
-                                iidd == index ? {...op, option_sort_order: Number(e.target.value)} : op
-                                
-                            ))} : qg
-                        ))}
-                    ))
-                  )}
-                />
-              </div>
-              <div className="md:col-span-1">
-                <label htmlFor={`answer${i}${index}`} className="block mb-1">
-                  Answer:
-                </label>
-                <select
-                  className="w-full bg-white border border-gray-300 rounded-lg px-2 py-3 text-gray-700 text-[16px] shadow-sm 
-             focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 
-             hover:border-orange-400 transition-all cursor-pointer"
-                  id={`answer${i}${index}`}
-             value={String(addQuiz.question_group[i].options[index].answer)}
-  onChange={(e) =>
-    setAddQuiz((prev) => ({
-      ...prev,
-      question_group: prev.question_group.map((qg, qIdx) =>
-        qIdx === i
-          ? {
-              ...qg,
-              options: qg.options.map((op, opIdx) =>
-                opIdx === index
-                  ? { ...op, answer: e.target.value === "true" } // ✅ Convert to boolean
-                  : op
-              ),
+                <AnimatePresence initial={false}>
+  {qu_group?.options?.map((_, index) => (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.25 }}
+      className="md:col-span-4"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* --- your existing inputs go here --- */}
+        
+        {/* Option Label */}
+        <div className="md:col-span-7">
+          <label htmlFor={`option_label${index}${i}`} className="block">
+            Option Label ({index + 1}):
+          </label>
+          <input
+            type="text"
+            className="mt-1 input-target-set-field w-full"
+            placeholder="Enter Label"
+            value={addQuiz.question_group[i].options[index].option_label}
+            onChange={(e) =>
+              setAddQuiz((prev) => ({
+                ...prev,
+                question_group: prev.question_group.map((qg, idxx) =>
+                  idxx === i
+                    ? {
+                        ...qg,
+                        options: qg.options.map((op, iidd) =>
+                          iidd === index
+                            ? { ...op, option_label: e.target.value }
+                            : op
+                        ),
+                      }
+                    : qg
+                ),
+              }))
             }
-          : qg
-      ),
-    }))
-  }
-                >
-                  <option value={"false"}>False</option>
-                  <option value={"true"}>True</option>
-                </select>
-              </div>
-              </>
-                ))}
+          />
+        </div>
+
+        {/* Sort Order */}
+        <div className="md:col-span-2">
+          <label htmlFor={`option_sort_order${i}${index}`} className="block">
+            Sort Order:
+          </label>
+          <input
+            type="number"
+            className="mt-1 input-target-set-field w-full"
+            placeholder="Sort Order"
+            value={addQuiz.question_group[i].options[index].option_sort_order}
+            onChange={(e) =>
+              setAddQuiz((prev) => ({
+                ...prev,
+                question_group: prev.question_group.map((qg, idxx) =>
+                  idxx === i
+                    ? {
+                        ...qg,
+                        options: qg.options.map((op, iidd) =>
+                          iidd === index
+                            ? {
+                                ...op,
+                                option_sort_order: Number(e.target.value),
+                              }
+                            : op
+                        ),
+                      }
+                    : qg
+                ),
+              }))
+            }
+          />
+        </div>
+
+        {/* Answer */}
+        <div className="md:col-span-2">
+          <label htmlFor={`answer${i}${index}`} className="block mb-1">
+            Answer:
+          </label>
+          <select
+            className="w-full bg-white border border-gray-300 rounded-lg px-2 py-3 text-gray-700"
+            value={String(addQuiz.question_group[i].options[index].answer)}
+            onChange={(e) =>
+              setAddQuiz((prev) => ({
+                ...prev,
+                question_group: prev.question_group.map((qg, qIdx) =>
+                  qIdx === i
+                    ? {
+                        ...qg,
+                        options: qg.options.map((op, opIdx) =>
+                          opIdx === index
+                            ? { ...op, answer: e.target.value === "true" }
+                            : op
+                        ),
+                      }
+                    : qg
+                ),
+              }))
+            }
+          >
+            <option value={"false"}>False</option>
+            <option value={"true"}>True</option>
+          </select>
+        </div>
+
+        {/* Remove Button */}
+        <div className="md:col-span-1">
+          <button
+            onClick={() =>
+              setAddQuiz((prev) => ({
+                ...prev,
+                question_group: prev.question_group.map((qg, indx) =>
+                  indx === i
+                    ? {
+                        ...qg,
+                        options: qg.options.filter((_, iidd) => iidd !== index),
+                      }
+                    : qg
+                ),
+              }))
+            }
+            type="button"
+            className="md:mt-10 border-1 cursor-pointer border-red-700 text-red-700 rounded-[5px] p-[2px]"
+          >
+            <IoClose />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  ))}
+</AnimatePresence>
+
              
 
               <div className="md:col-span-4 flex justify-end">
@@ -443,7 +518,7 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
               
                 </>
               ))}
-
+</AnimatePresence>
               <div className="md:col-span-4">
                 <button onClick={handleAddQuestionOptions} type="button" className="mini-primary-button flex items-center">
                   <FaPlus /> Add Question/Options
@@ -473,6 +548,8 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
           </form>
         </div>
       </div>
+
+     <CategoriesPanel categoryPanelHS={categoryPanelHS} handleClosePopupHS={handleClosePopupHS}/>
     </>
   );
 };
