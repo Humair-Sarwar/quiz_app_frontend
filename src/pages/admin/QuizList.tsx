@@ -1,0 +1,136 @@
+import React, { useState } from "react";
+import { FaPlus } from "react-icons/fa6";
+import Pagination from "../../components/Pagination";
+import { MdModeEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
+import bg from '../../assets/images/bg.jpg'
+import DeletePopup from "../../components/DeletePopup";
+import { RiListSettingsLine } from "react-icons/ri";
+import AddUpdateQuiz from "../../components/AddUpdateQuiz";
+
+const QuizList: React.FC = () => {
+  const [addCategory, setAddCategory] = useState<boolean>(false);
+  const [editCategory, setEditCategory] = useState<boolean>(false);
+  const [deletePopup, setDeletPopup] = useState<boolean>(false);
+  const handleClosePopup = () => {
+    setAddCategory(false);
+    setEditCategory(false);
+    setDeletPopup(false);
+  };
+  return (
+    <>
+      <div className="p-5 lg:p-10 h-[calc(100vh - 60px)]">
+        <div className="flex justify-between items-start flex-col lg:flex-row md:flex-row lg:items-center md:items-center">
+          <h2 className="text-[20px] font-semibold flex items-center gap-2 mb-3 text-nowrap">
+            <RiListSettingsLine className="text-[20px]" /> Quiz List
+          </h2>
+          <div className="flex w-full justify-end gap-3 items-start flex-col lg:flex-row md:flex-row lg:items-center md:items-center">
+            <div className="relative w-full lg:w-auto md:w-auto">
+              <IoSearch className="absolute left-3 top-[50%] text-[20px] translate-y-[-50%]" />
+
+              <input
+                type="text"
+                id="name"
+                className="input-target-set-field w-full !ps-9"
+                placeholder="Search Quiz..."
+              />
+            </div>
+
+            <button
+              className="primary-button flex items-center gap-2 w-full lg:w-auto md:w-auto justify-center"
+              onClick={() => setAddCategory(true)}
+            >
+              <FaPlus />
+              Add Quiz
+            </button>
+          </div>
+        </div>
+
+        <div className="w-full overflow-x-auto mt-8">
+          <div className="min-w-max border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white">
+            <table className="w-full text-sm border-collapse">
+              <thead className="bg-gray-100 text-gray-700 uppercase tracking-wide">
+                <tr>
+                 
+                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Image
+                  </th>
+                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Quiz Name
+                  </th>
+                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Quiz Category
+                  </th>
+                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Total Questions
+                  </th>
+                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Draft/Publish
+                  </th>
+                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Sort Order
+                  </th>
+                  <th className="px-6 py-3 text-center font-semibold text-[13px] capitalize whitespace-nowrap">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody className="divide-y divide-gray-100 text-gray-800">
+                <tr className="hover:bg-gray-50 transition">
+                 
+                  <td className="px-6 py-2 text-[13px] whitespace-nowrap">
+                    <div className="w-[40px] h-[40px] rounded-3xl overflow-hidden border-1 border-dashed border-[#8d8d8d] object-cover">
+                        <img src={bg} alt="" className="h-full w-full object-cover" />
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-[13px] whitespace-nowrap">
+                    HTML5
+                  </td>
+                  <td className="px-6 py-4 text-[13px] whitespace-nowrap">
+                    Coding
+                  </td>
+                  <td className="px-6 py-4 text-[13px] whitespace-nowrap">10</td>
+                  <td className="px-6 py-4 text-[13px] whitespace-nowrap">1</td>
+                   <td className="px-6 py-4 text-[13px] whitespace-nowrap">
+                    
+                   </td>
+                  <td className="px-6  text-center">
+                    <button
+                      onClick={() => setEditCategory(true)}
+                      className="text-blue-600 hover:text-blue-800 transition cursor-pointer"
+                    >
+                      <MdModeEdit className="text-[20px]" />
+                    </button>
+                    <button onClick={()=> setDeletPopup(true)} className="text-red-600 hover:text-red-800 transition cursor-pointer">
+                      <MdDelete className="text-[20px]" />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <Pagination />
+      </div>
+
+      {addCategory && (
+        <AddUpdateQuiz
+          component_type={1}
+          handleClosePopup={handleClosePopup}
+        />
+      )}
+      {editCategory && (
+        <AddUpdateQuiz
+          component_type={2}
+          handleClosePopup={handleClosePopup}
+        />
+      )}
+      {deletePopup && <DeletePopup handleClosePopup={handleClosePopup}/>}
+    </>
+  );
+};
+
+export default QuizList;
