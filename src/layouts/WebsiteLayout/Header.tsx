@@ -6,11 +6,14 @@ import { MdOutlineMenu } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import Overlay from "../../components/Overlay";
 import { CiBoxList } from "react-icons/ci";
-import { IoLogOutOutline } from "react-icons/io5";  
+import { IoLogOutOutline } from "react-icons/io5";
 import { TfiDashboard } from "react-icons/tfi";
 
 const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const userType = localStorage.getItem("user_type");
+  console.log(userType, "0000");
+  // const userId = localStorage.getItem("user_id");
   return (
     <>
       <header className="bg-[#fff5ed] border-b border-[#d7d7d7]">
@@ -28,22 +31,28 @@ const Header: React.FC = () => {
           <nav className="desktop-menu-website">
             <ul className="flex items-center gap-6 justify-between">
               <li>
-                <NavLink to="/" className={({ isActive }) =>
-    `transition-all ${
-      isActive
-        ? " text-[#ff5b07]"
-        : " hover:text-[#ff5b07]"
-    }`
-  }>Home</NavLink>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `transition-all ${
+                      isActive ? " text-[#ff5b07]" : " hover:text-[#ff5b07]"
+                    }`
+                  }
+                >
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink className={({ isActive }) =>
-    `transition-all ${
-      isActive
-        ? " text-[#ff5b07]"
-        : " hover:text-[#ff5b07]"
-    }`
-  } to="/categories">Categories</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    `transition-all ${
+                      isActive ? " text-[#ff5b07]" : " hover:text-[#ff5b07]"
+                    }`
+                  }
+                  to="/categories"
+                >
+                  Categories
+                </NavLink>
               </li>
               <li>
                 <a href="">FAQs</a>
@@ -51,61 +60,84 @@ const Header: React.FC = () => {
             </ul>
           </nav>
           <div className="flex items-center gap-2">
-            <div className="relative user-button-target-icons p-3 cursor-pointer user-icon-none-target">
-  <FaRegUser className="text-[20px]" />
-  <div className="bg-white p-4 inner-box rounded-2xl shadow absolute top-10 left-[50%] translate-x-[-50%]">
-    <ul>
+            {Number(userType) === 1 || Number(userType) === 2 ? (
+              <div className="relative user-button-target-icons p-3 cursor-pointer user-icon-none-target">
+                <FaRegUser className="text-[20px]" />
+                <div className="bg-white p-4 inner-box rounded-2xl shadow absolute top-10 left-[50%] translate-x-[-50%]">
+                  <ul>
+                    {Number(userType) === 2 && <li>
+                      <NavLink
+                        to={"/admin/dashboard"}
+                        className={({ isActive }) =>
+                          `transition-all text-nowrap text-[14px] flex items-center gap-2 mb-2 ${
+                            isActive
+                              ? " text-[#ff5b07]"
+                              : " hover:text-[#b8450b]"
+                          }`
+                        }
+                      >
+                        <TfiDashboard /> Dashboard
+                      </NavLink>
+                    </li>}
+                    
 
-<li>
-        <NavLink to={'/admin/dashboard'}  className={({ isActive }) =>
-    `transition-all text-nowrap text-[14px] flex items-center gap-2 mb-2 ${
-      isActive
-        ? " text-[#ff5b07]"
-        : " hover:text-[#b8450b]"
-    }`
-  }>
-          <TfiDashboard /> Dashboard
-        </NavLink>
-      </li>
+                    {Number(userType) === 1 && <><li>
+                      <NavLink
+                        to={"/user/quiz-list"}
+                        className={({ isActive }) =>
+                          `transition-all text-nowrap text-[14px] flex items-center gap-2 mb-2 ${
+                            isActive
+                              ? " text-[#ff5b07]"
+                              : " hover:text-[#b8450b]"
+                          }`
+                        }
+                      >
+                        <CiBoxList /> Solved Quiz List
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to={"/user/profile-info"}
+                        className={({ isActive }) =>
+                          `transition-all text-nowrap text-[14px] flex items-center gap-2 ${
+                            isActive
+                              ? " text-[#ff5b07]"
+                              : " hover:text-[#b8450b]"
+                          }`
+                        }
+                      >
+                        <FaRegUser /> Profile Info
+                      </NavLink>
+                    </li></>}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <>
+                <NavLink to="/login" className="p-[10px 20px] inline-block">
+                  Log in
+                </NavLink>
+                <NavLink to="/join-now" className="primary-button">
+                  Join Now
+                </NavLink>
+              </>
+            )}
 
-
-      <li>
-        <NavLink to={'/user/quiz-list'}  className={({ isActive }) =>
-    `transition-all text-nowrap text-[14px] flex items-center gap-2 mb-2 ${
-      isActive
-        ? " text-[#ff5b07]"
-        : " hover:text-[#b8450b]"
-    }`
-  }>
-          <CiBoxList /> Solved Quiz List
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to={'/user/profile-info'} className={({ isActive }) =>
-    `transition-all text-nowrap text-[14px] flex items-center gap-2 ${
-      isActive
-        ? " text-[#ff5b07]"
-        : " hover:text-[#b8450b]"
-    }`
-  }>
-          <FaRegUser /> Profile Info
-        </NavLink>
-      </li>
-    </ul>
-  </div>
-</div>
-
-            <NavLink to="/login" className="p-[10px 20px] inline-block">
-              Log in
-            </NavLink>
-            <NavLink to="/join-now" className="primary-button">
-              Join Now
-            </NavLink>
-            <button className="text-2xl cursor-pointer text-red-500"><IoLogOutOutline /></button>
+            {(Number(userType) === 1 || Number(userType) === 2) && (
+              <button className="text-2xl cursor-pointer text-red-500">
+                <IoLogOutOutline />
+              </button>
+            )}
           </div>
         </div>
       </header>
-      <div className={`bg-white rounded-2xl !z-4 p-3 py-3 w-[300px] ${showMenu ? 'mobile-menu-target-show mobile-menu-target' : 'mobile-menu-target'}`}>
+      <div
+        className={`bg-white rounded-2xl !z-4 p-3 py-3 w-[300px] ${
+          showMenu
+            ? "mobile-menu-target-show mobile-menu-target"
+            : "mobile-menu-target"
+        }`}
+      >
         <div className="text-end mb-2">
           <button className="close-btn" onClick={() => setShowMenu(!showMenu)}>
             <IoClose />
@@ -116,14 +148,11 @@ const Header: React.FC = () => {
             <li className="w-full mb-1">
               <NavLink
                 to={"/"}
-                
-                 className={({ isActive }) =>
-    `w-full inline-block p-2 rounded-[8px] ${
-      isActive
-        ? "active-btn-style"
-        : " inactive-btn-style"
-    }`
-  }
+                className={({ isActive }) =>
+                  `w-full inline-block p-2 rounded-[8px] ${
+                    isActive ? "active-btn-style" : " inactive-btn-style"
+                  }`
+                }
               >
                 Home
               </NavLink>
@@ -132,12 +161,10 @@ const Header: React.FC = () => {
               <NavLink
                 to={"/categories"}
                 className={({ isActive }) =>
-    `w-full inline-block p-2 rounded-[8px] ${
-      isActive
-        ? "active-btn-style"
-        : " inactive-btn-style"
-    }`
-  }
+                  `w-full inline-block p-2 rounded-[8px] ${
+                    isActive ? "active-btn-style" : " inactive-btn-style"
+                  }`
+                }
               >
                 Categories
               </NavLink>
@@ -146,43 +173,45 @@ const Header: React.FC = () => {
               <NavLink
                 to={"/faq"}
                 className={({ isActive }) =>
-    `w-full inline-block p-2 rounded-[8px] ${
-      isActive
-        ? "active-btn-style"
-        : " inactive-btn-style"
-    }`
-  }
+                  `w-full inline-block p-2 rounded-[8px] ${
+                    isActive ? "active-btn-style" : " inactive-btn-style"
+                  }`
+                }
               >
                 FAQs
               </NavLink>
             </li>
-                  <h3 className="font-semibold mt-4 m-2 text-[#7c7c7c]">User Dashboard Navigations</h3>
+            <h3 className="font-semibold mt-4 m-2 text-[#7c7c7c]">
+              User Dashboard Navigations
+            </h3>
             <li className="w-full">
-        <NavLink to={'/user/quiz-list'} className={({ isActive }) =>
-    `text-nowrap flex  w-full items-center p-2 rounded-[8px] gap-2 ${
-      isActive
-        ? "active-btn-style"
-        : " inactive-btn-style"
-    }`
-  }>
-          <CiBoxList /> Solved Quiz List
-        </NavLink>
-      </li>
-      <li className="w-full">
-        <NavLink to={'/user/profile-info'} className={({ isActive }) =>
-    `text-nowrap flex  w-full items-center p-2 rounded-[8px] gap-2 ${
-      isActive
-        ? "active-btn-style"
-        : " inactive-btn-style"
-    }`
-  }>
-          <FaRegUser /> Profile Info
-        </NavLink>
-      </li>
+              <NavLink
+                to={"/user/quiz-list"}
+                className={({ isActive }) =>
+                  `text-nowrap flex  w-full items-center p-2 rounded-[8px] gap-2 ${
+                    isActive ? "active-btn-style" : " inactive-btn-style"
+                  }`
+                }
+              >
+                <CiBoxList /> Solved Quiz List
+              </NavLink>
+            </li>
+            <li className="w-full">
+              <NavLink
+                to={"/user/profile-info"}
+                className={({ isActive }) =>
+                  `text-nowrap flex  w-full items-center p-2 rounded-[8px] gap-2 ${
+                    isActive ? "active-btn-style" : " inactive-btn-style"
+                  }`
+                }
+              >
+                <FaRegUser /> Profile Info
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>
-      {showMenu && <Overlay isVisible={showMenu}/>}
+      {showMenu && <Overlay isVisible={showMenu} />}
     </>
   );
 };

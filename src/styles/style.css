@@ -394,3 +394,27 @@ color: white;
   box-shadow: 0 0 2px #ff5b07;
   transition: all 0.3s;
 }
+
+
+
+.whatsAppFixedFloatButton {
+  position: fixed;
+  right: 10px;
+  bottom: 15px;
+  z-index: 1;
+}
+
+.whatsAppFixedFloatButton a {
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+.whatsAppFixedFloatButton .logoBtnWhatsApp {
+  height: 50px;
+  width: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -18,6 +18,7 @@ const QuizList: React.FC = () => {
     setEditCategory(false);
     setDeletPopup(false);
   };
+ 
   return (
     <>
       <div className="p-5 lg:p-10 h-[calc(100vh - 60px)]">
@@ -113,7 +114,7 @@ const QuizList: React.FC = () => {
           </div>
         </div>
 
-        <Pagination />
+        <Pagination handlePageSize={handlePageSize}/>
       </div>
 
       {addCategory && (

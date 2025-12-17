@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb } from "react-icons/hi";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import useLogin from "../../hooks/useLogin";
+import { handleError, handleSuccess } from "../../toast";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const loginUser = useLogin();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   // Track form values
   const [formData, setFormData] = useState({ email: "", password: "" });
   // Track errors per field
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
 
   // Handle input changes + live validation
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,8 +37,8 @@ const Login: React.FC = () => {
     if (name === "password") {
       if (!value.trim()) {
         setErrors((prev) => ({ ...prev, password: "Password is required" }));
-      } else if (value.length < 6) {
-        setErrors((prev) => ({ ...prev, password: "At least 6 characters" }));
+      } else if (value.length < 1) {
+        setErrors((prev) => ({ ...prev, password: "At least 1 characters" }));
       } else {
         setErrors((prev) => ({ ...prev, password: "" }));
       }
@@ -49,9 +57,18 @@ const Login: React.FC = () => {
 
     // If no errors → submit
     if (Object.keys(newErrors).length === 0) {
-      alert("Login successful ✅");
-      e.currentTarget.reset();
-      setFormData({ email: "", password: "" });
+      loginUser.mutate(formData, {
+        onSuccess: (data) => {
+          localStorage.setItem("token", data?.token);
+          localStorage.setItem("user_id", data?.user?._id);
+          localStorage.setItem("user_type", JSON.stringify(data?.user?.type));
+          handleSuccess("You have successfully logged in!");
+          navigate(data.user.type === 1 ? "/" : "/admin/dashboard");
+        },
+        onError: ()=>{
+          handleError("Email or Password wrong!");
+        }
+      });
     }
   };
 
@@ -78,22 +95,38 @@ const Login: React.FC = () => {
             className="mt-1 w-full border border-gray-300 rounded p-2"
             placeholder="Enter your email"
           />
-          {errors.email && <p className="text-red-500 text-[12px] mt-1">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-[12px] mt-1">{errors.email}</p>
+          )}
         </div>
 
         {/* Password */}
         <div className="mt-3">
           <label htmlFor="password">Password:</label>
-          <input
-            name="password"
-            id="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 rounded p-2"
-            placeholder="Enter your password"
-          />
-          {errors.password && <p className="text-red-500 text-[12px] mt-1">{errors.password}</p>}
+          <div className="relative">
+            <input
+              name="password"
+              id="password"
+              type={showPassword ? "password" : "text"}
+              value={formData.password}
+              onChange={handleChange}
+              className="mt-1 w-full border border-gray-300 rounded py-2 pl-2 pr-13!"
+              placeholder="Enter your password"
+            />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-5"
+            >
+              {showPassword ? (
+                <FaRegEye className="text-[18px] cursor-pointer" />
+              ) : (
+                <FaRegEyeSlash className="text-[18px] cursor-pointer" />
+              )}
+            </span>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-[12px] mt-1">{errors.password}</p>
+          )}
         </div>
 
         <button

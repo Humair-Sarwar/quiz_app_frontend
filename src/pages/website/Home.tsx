@@ -2,8 +2,12 @@ import React from "react";
 import hero_banner_image from "../../assets/images/hero-banner.png";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import coding from '../../assets/images/coding.png'
 import FAQAccordion from "../../components/FAQs";
+import MainSpinnerLoader from "../../components/MainSpinnerLoader";
+import useWebsiteCategories from "../../hooks/useWebsiteCategories";
+import { handleError } from "../../toast";
+import no_image from "../../assets/images/no_image.png";
+import { NavLink } from "react-router-dom";
 
 const responsive2 = {
   superLargeDesktop: {
@@ -24,8 +28,18 @@ const responsive2 = {
     items: 1,
   },
 };
-
-const Home: React.FC = () => {
+interface HomeProps{
+  data: {
+    promotional_items: []
+  },
+  isLoading: boolean
+}
+const Home: React.FC<HomeProps> = ({data, isLoading}) => {
+  const {data: website_categories, isLoading: loadingData, error} = useWebsiteCategories({search: "", page: 1, limit: 1000});
+  console.log("Website categories data:", website_categories);
+  if(error){
+    handleError('Something went wrong!')
+  }
   return (
     <>
     <section id="hero-section" className="bg-[#fff5ed]">
@@ -54,67 +68,78 @@ const Home: React.FC = () => {
   </div>
 </section>
 
-
-<div className="slide-text-section px-2">
+{ isLoading ? <div className="w-[100%] flex justify-center items-center py-6"><MainSpinnerLoader/></div> : (data?.promotional_items.length > 0 && (<div className="slide-text-section px-2">
         <div className="text_scroller_1 scroller_item_1 ul-li">
-          <ul>
-            <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+          
+            {data?.promotional_items.map((item: any)=> (
+              <>
+              <ul>
+ <li>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
           </ul>
           <ul aria-hidden="true">
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
             <li>
-              <h3>Your Favourite Tech Brands - All Under One Roof!</h3>
+              <h3>{item?.title}</h3>
             </li>
-          </ul>
+             </ul>
+              </>
+            ))}
+           
+         
         </div>
-      </div>
+      </div>))
+  
+}
 
-      <section id="categories" className="py-15 max-w-[1400px] container mx-auto px-4">
+{loadingData ? <div className="w-[100%] flex justify-center items-center py-6"><MainSpinnerLoader/></div> : <section id="categories" className="py-15 max-w-[1400px] container mx-auto px-4">
         <h2 className="font-semibold text-center mb-5 text-3xl lg:text-4xl">Choose Category</h2>
         <Carousel
           responsive={responsive2}
           className="slide-carousol-service-box-set pb-5"
         >
- {["Math", "Science", "History", "Coding", 'testing'].map((category) => (
+ {website_categories.data?.map((category: {_id: string, slug: string, image: string, category_name: string}) => (
+    <NavLink to={'/categories/' + category?.slug} className={'block'}>
     <div
-      key={category}
+      key={category?._id}
       className="p-4 rounded-2xl text-center mx-2 category-box-target my-5 bg-[#fff5ed]"
     >
       <div className="flex justify-center items-center box-image">
-        <img src={coding} alt="" />
+        <img src={category?.image == null || category?.image == undefined || category?.image == "" ? no_image : import.meta.env.BASE_URL + "/uploads/" + category?.image} alt="" />
       </div>
-      <h3 className="text-lg font-semibold mt-3">{category}</h3>
+      <h3 className="text-lg font-semibold mt-3">{category?.category_name}</h3>
     </div>
+    </NavLink>
   ))}
 
         </Carousel>
-       <div className="text-center"> <button className="primary-button">View All</button></div>
-      </section>
+       <div className="text-center"> <NavLink to={'/categories'} className="primary-button">View All</NavLink></div>
+      </section>}
+      
 
           <FAQAccordion/>
       

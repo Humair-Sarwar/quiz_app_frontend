@@ -2,7 +2,14 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { HiOutlineLightBulb } from "react-icons/hi";
 
-const Footer: React.FC = () => {
+interface FooterProps{
+  data?: {
+    footer_description: string
+  },
+  isLoading?: boolean
+}
+
+const Footer: React.FC<FooterProps> = ({data, isLoading}) => {
   return (
     <>
       <footer className="bg-white">
@@ -12,14 +19,26 @@ const Footer: React.FC = () => {
       
       {/* Brand Section */}
       <div>
-        <NavLink to="/" className="flex items-center gap-1 mb-5 justify-start sm:justify-start">
+        
+        {isLoading ? (
+          // <MainSpinnerLoader/>
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-14 bg-gray-200 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-200 rounded w-full"></div>
+                   
+                  </div>
+      ) : <>
+      <NavLink to="/" className="flex items-center gap-1 mb-5 justify-start sm:justify-start">
           <h3 className="font-bold text-4xl primary-color-text">Quiz</h3>
           <HiOutlineLightBulb className="text-4xl" />
         </NavLink>
         <p className="text-left text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem
-          reprehenderit laudantium error quod dolor totam!
+          {data?.footer_description}
         </p>
+      </>
+        }
+        
+        
       </div>
 
       {/* Links Section */}

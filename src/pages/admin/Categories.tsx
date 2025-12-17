@@ -52,7 +52,7 @@ const Categories: React.FC = () => {
             <table className="w-full text-sm border-collapse">
               <thead className="bg-gray-100 text-gray-700 uppercase tracking-wide">
                 <tr>
-                  <th className="px-6 py-3 text-left font-semibold text-[13px] capitalize whitespace-nowrap">
+                  <th className="px-6 py-3 text-left flex items-center font-semibold text-[13px] capitalize whitespace-nowrap">
                     <input
                       type="checkbox"
                       className="w-4 h-4 cursor-pointer accent-[#e04e00] border-gray-300 rounded focus:ring-[#e04e00]"

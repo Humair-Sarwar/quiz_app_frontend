@@ -8,19 +8,20 @@ import Users from "../pages/admin/Users";
 import Media from "../pages/admin/Media";
 import Settings from "../pages/admin/Settings";
 import ProfileSettings from "../pages/admin/ProfileSettings";
+import PrivateRoute from "./PrivateAdminRoute";
 
 const AdminRoutes: React.FC = () => {
   return (
     <>
       <Routes>
         <Route element={<AdminLayout />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/categories" element={<Categories />} />
-          <Route path="/admin/quiz-list" element={<QuizList />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/media" element={<Media />} />
-          <Route path="/admin/profile-settings" element={<ProfileSettings />} />
-          <Route path="/admin/settings" element={<Settings />} />
+          <Route path="/admin/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/admin/categories" element={<PrivateRoute><Categories /></PrivateRoute>} />
+          <Route path="/admin/quiz-list" element={<PrivateRoute><QuizList /></PrivateRoute>} />
+          <Route path="/admin/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+          <Route path="/admin/media" element={<PrivateRoute><Media /></PrivateRoute>} />
+          <Route path="/admin/profile-settings" element={<PrivateRoute><ProfileSettings /></PrivateRoute>} />
+          <Route path="/admin/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
         </Route>
       </Routes>
     </>
