@@ -4,6 +4,7 @@ import { HiOutlineLightBulb } from "react-icons/hi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import useLogin from "../../hooks/useLogin";
 import { handleError, handleSuccess } from "../../toast";
+import SpinnerLoader from "../../components/SpinnerLoader";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-[100vh] bg-[#fff5ed] flex justify-center items-center">
+    <div className="w-full min-h-screen bg-[#fff5ed] flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 form-container-target mx-4 rounded-lg shadow-md w-[350px]"
@@ -130,11 +131,14 @@ const Login: React.FC = () => {
         </div>
 
         <button
-          className="primary-button w-full mt-5 bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        disabled={loginUser.isPending}
+          className={`primary-button w-full mt-5 ${loginUser.isPending && 'bg-[#e04e00]! cursor-not-allowed!'} bg-blue-600 text-white py-2 rounded hover:bg-blue-700`}
           type="submit"
         >
-          Log in
+          
+          {loginUser.isPending ? <div className="flex justify-center"><SpinnerLoader/></div> : 'Log in'}
         </button>
+
 
         <p className="mt-5 text-center text-[14px]">
           Don’t have an account?{" "}

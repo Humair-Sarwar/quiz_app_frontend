@@ -9,7 +9,7 @@ import QuizListing from "../pages/website/QuizListing";
 
 import { handleError } from "../toast";
 import useWebsite from "../hooks/useWebsite";
-import PageNotFound from "../pages/admin/PageNotFound";
+import PageNotFound from "../pages/website/PageNotFound";
 
 const WebsiteRoutes: React.FC = () => {
   const { data, error, isLoading } = useWebsite();

@@ -3,6 +3,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router-dom";
 import useSignup from "../../hooks/useSignup";
 import { handleError, handleSuccess } from "../../toast";
+import SpinnerLoader from "../../components/SpinnerLoader";
 
 interface StateDataVal {
   name: string;
@@ -86,8 +87,6 @@ const Signup: React.FC = () => {
         
       }
     })
-    console.log("submitted");
-    console.log(formData, "----------------data----------");
   }
 };
 
@@ -164,7 +163,7 @@ const Signup: React.FC = () => {
 
   return (
     <>
-      <div className="w-full h-[100vh] bg-[#fff5ed] flex justify-center items-center">
+      <div className="w-full min-h-screen bg-[#fff5ed] flex justify-center items-center">
         <form
           onSubmit={handleSubmitForm}
           className="bg-white p-6 form-container-target mx-4"
@@ -266,8 +265,8 @@ const Signup: React.FC = () => {
               )}
             </div>
           </div>
-          <button className="primary-button w-full mt-5" type="submit">
-            Create Account
+          <button className={`primary-button w-full mt-5 ${signupUser.isPending && 'bg-[#e04e00]! cursor-not-allowed!'}`} type="submit">
+            {signupUser.isPending ? <div className="flex justify-center"><SpinnerLoader/></div> : 'Create Account'}
           </button>
           <p className="mt-5 text-center text-[14px]">
             Already have an account?{" "}

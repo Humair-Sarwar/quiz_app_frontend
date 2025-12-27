@@ -4,11 +4,11 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 interface PaginationProps {
   page: number;
   totalPages: number;
-  prevClcik: () => void;
+  prevClick: () => void;
   nextClick: () => void;
   clickNum: (data: number) => void;
   currentPage: number;
-  handlePageSize?: () => void;
+  handlePageSize?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   totalItems: number;
   firstRecord: number;
   lastRecord: number;
@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
   handlePageSize,
   totalItems,
   totalPages,
-  prevClcik,
+  prevClick,
   nextClick,
   clickNum,
   currentPage,
@@ -39,7 +39,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <div className="flex gap-2">
         <button
           disabled={page === 1 || totalPages == 0}
-          onClick={prevClcik}
+          onClick={prevClick}
           className={`px-3 py-2 rounded-md border ${page === 1 || totalPages == 0 ? 'bg-gray-100 !cursor-not-allowed' : 'bg-white'} border-gray-300 hover:bg-gray-100  cursor-pointer`}
         >
           <IoIosArrowBack />

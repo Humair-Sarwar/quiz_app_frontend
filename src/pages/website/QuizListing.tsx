@@ -4,7 +4,6 @@ import Pagination from "../../components/Pagination";
 import QuizPopup from "../../components/QuizPopup";
 import useQuizList from "../../hooks/useQuizList";
 import { handleError } from "../../toast";
-import MainSpinnerLoader from "../../components/MainSpinnerLoader";
 import { useLocation } from "react-router-dom";
 
 const QuizListing: React.FC = () => {
@@ -33,11 +32,11 @@ const QuizListing: React.FC = () => {
     setSearch(e.target.value);
     setPage(1);
   };
-  const handlePageSize = (e: React.ChangeEvent<HTMLOptionElement>) => {
+  const handlePageSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(e.target.value));
     setPage(1);
   };
-  const prevClcik = () => {
+  const prevClick = () => {
     setPage(page - 1);
   };
   const nextClick = () => {
@@ -142,7 +141,7 @@ const QuizListing: React.FC = () => {
 
           <Pagination
             currentPage={data?.pagination?.currentPage}
-            prevClcik={prevClcik}
+            prevClick={prevClick}
             firstRecord={data?.pagination?.firstRecord}
             lastRecord={data?.pagination?.lastRecord}
             nextClick={nextClick}

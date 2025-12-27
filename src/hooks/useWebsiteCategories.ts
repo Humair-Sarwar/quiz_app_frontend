@@ -9,7 +9,6 @@ interface useWebsiteCategoriesProps{
 
 
 const useWebsiteCategories = ({search, page, limit}: useWebsiteCategoriesProps)=>{
-    console.log("Search term in hook:", search);
     const fetchWebsiteCategories = async () => await apiPublic.get('/api/category-all-website', {
         params: {
             search,

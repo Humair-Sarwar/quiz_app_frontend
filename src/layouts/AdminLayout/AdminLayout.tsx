@@ -19,7 +19,7 @@ const AdminLayout: React.FC = () => {
       
     <div className='flex items-start  user-dashboard-layout'>
         <AdminSidebar showHideSidebar={showHideSidebar} handlehideSidebar={handlehideSidebar}/>
-        <div className='flex flex-col w-full h-[100vh] ms-[280px] right-admin-content-target bg-[#f0f0f0]'>
+        <div className='flex flex-col w-full min-h-screen ms-[280px] right-admin-content-target bg-[#f0f0f0]'>
         <AdminHeader handleShowSidebar={handleShowSidebar}/>
         <Outlet/>
         </div>
