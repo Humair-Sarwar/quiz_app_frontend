@@ -22,6 +22,8 @@ type CategoryDeleteProps = {
   id: string;
 }
 
+type CategoryDeleteSelectedProps = object[]
+
 
 export const useAdminCategories = ({search, page, limit, business_id}: useAdminCategoriesProps) => {
 
@@ -36,7 +38,7 @@ export const useAdminCategories = ({search, page, limit, business_id}: useAdminC
 
   return useQuery({
     queryKey: ['admin-categories', search, page, limit],
-    queryFn: ()=> fetchCategories()
+    queryFn: ()=> fetchCategories(),
   })
 }
 
@@ -57,5 +59,11 @@ export const deleteCategory = ()=>{
 export const updateCategory = ()=>{
   return useMutation<CategoryResponse, unknown, CategoryInput>({
     mutationFn: (data: CategoryInput) => apiAuth.put("/api/category", data).then((res)=> res?.data)
+  })
+}
+
+export const useDeleteSelectedCategory = ()=>{
+  return useMutation<CategoryResponse, unknown, CategoryDeleteSelectedProps>({
+    mutationFn: (data: CategoryDeleteSelectedProps) => apiAuth.delete("/api/category-selected", {data}).then((res)=> res?.data)
   })
 }

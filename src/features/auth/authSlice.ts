@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-// State type
 export interface AuthState {
   token: string | null;
   user_type: number | null;
   user_id: string | null;
 }
 
-// Initial state
+// Initialize from localStorage
 const initialState: AuthState = {
-  token: null,
-  user_type: null,
-  user_id: null,
+  token: localStorage.getItem("token"),
+  user_type: localStorage.getItem("user_type")
+    ? Number(localStorage.getItem("user_type"))
+    : null,
+  user_id: localStorage.getItem("user_id") || null,
 };
 
-// Payload type for action
 interface AuthPayload {
   token: string;
   user_type: number;
@@ -30,7 +30,6 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user_type = action.payload.user_type;
       state.user_id = action.payload.user_id;
-      console.log("Redux state updated:", state);
     },
   },
 });

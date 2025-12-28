@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Overlay from "./Overlay";
+import { motion } from "framer-motion";
 import { MdEdit } from "react-icons/md";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoCameraSharp } from "react-icons/io5";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import Overlay from "./Overlay";
 import bg from "../assets/images/bg.jpg";
 import my_pic from "../assets/images/my-pic.jpg";
-import { IoCameraSharp } from "react-icons/io5";
-import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
 
 interface EditProfileProps {
   handleClosePopup: () => void;
@@ -17,169 +17,135 @@ const EditProfilePopup: React.FC<EditProfileProps> = ({ handleClosePopup }) => {
   const [phone, setPhone] = useState<string>("");
 
   useEffect(() => {
-    // Slight delay to trigger CSS transition after mount
     setTimeout(() => setIsVisible(true), 10);
   }, []);
 
   const handleCloseWithAnimation = () => {
     setIsVisible(false);
-    setTimeout(() => {
-      handleClosePopup();
-    }, 300); // match your transition duration
+    setTimeout(handleClosePopup, 300);
   };
 
   return (
     <>
-      {/* Background overlay */}
-      <Overlay isVisible={isVisible}/>
+      <Overlay isVisible={isVisible} />
 
-      {/* Popup container */}
-      <div
-        className={`fixed inset-0 flex items-center justify-center py-4 px-4 z-50 transition-all duration-300 ease-out ${
-          isVisible
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-90 translate-y-10"
-        }`}
-      >
-        <div className="bg-white rounded-2xl overflow-y-auto max-h-[100%] shadow-2xl p-6 sm:p-6 w-full max-w-2xl relative transition-all duration-300 ease-in-out">
-          <form action="">
+      <div className="fixed inset-0 flex items-center justify-center py-4 px-4 z-50">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={isVisible ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl w-full max-w-2xl relative border border-slate-100"
+        >
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col max-h-[90vh]">
+            
             {/* Header */}
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-[18px] font-semibold flex items-center gap-2">
-                <MdEdit /> Edit Profile
+            <div className="flex justify-between items-center p-6 border-b border-slate-50">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                <div className="p-2 bg-orange-50 rounded-lg">
+                  <MdEdit className="text-[#ff5b07]" />
+                </div>
+                Edit Profile
               </h2>
               <button
                 type="button"
                 onClick={handleCloseWithAnimation}
-                className="bg-[#cccccc8c] rounded-4xl p-[3px] cursor-pointer transition-all text-black hover:bg-[#e04e00] hover:text-white"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-400 hover:bg-[#ff5b07] hover:text-white transition-all cursor-pointer"
               >
-                <IoClose />
+                <IoClose size={20} />
               </button>
             </div>
 
-            {/* Background + profile image */}
-            <div className="w-full h-[100px] relative mb-16">
-              <img
-                src={bg}
-                alt="Background"
-                className="object-cover h-full w-full rounded-2xl shadow"
-              />
-
-              <label
-                htmlFor="bgUpload"
-                className="absolute top-2 right-2 bg-[#cccccc8c] hover:bg-[#e04e00] hover:text-white text-black px-1 py-1 rounded-4xl cursor-pointer text-sm font-medium transition-colors duration-300"
-              >
-                <IoCameraSharp className="text-[20px]" />
-              </label>
-              <input
-                type="file"
-                id="bgUpload"
-                className="hidden"
-                onChange={() => {}}
-              />
-
-              {/* Profile image */}
-              <div className="absolute left-1/2 -translate-x-1/2 bottom-[-50px] h-[100px] w-[100px] rounded-full border-4 border-white shadow-md group">
+            <div className="overflow-y-auto p-8 pt-4">
+              {/* Image Upload Section */}
+              <div className="w-full h-[120px] relative mb-16">
                 <img
-                  src={my_pic}
-                  alt="Profile"
-                  className="h-full w-full object-cover object-center rounded-full"
+                  src={bg}
+                  alt="Background"
+                  className="object-cover h-full w-full rounded-3xl shadow-inner"
                 />
-
-                <label
-                  htmlFor="profileUpload"
-                  className="absolute bottom-[-2px] right-[-2px] z-30 bg-[#cccccc8c] hover:bg-[#e04e00] hover:text-white text-black p-1 rounded-full cursor-pointer shadow transition-all duration-300 flex items-center justify-center"
-                >
-                  <IoCameraSharp className="text-[18px]" />
+                <label className="absolute top-3 right-3 bg-white/90 hover:bg-[#ff5b07] hover:text-white p-2 rounded-xl cursor-pointer shadow-sm transition-all text-slate-600">
+                  <IoCameraSharp size={18} />
+                  <input type="file" className="hidden" />
                 </label>
 
-                <input
-                  type="file"
-                  id="profileUpload"
-                  className="hidden"
-                  onChange={() => console.log()}
-                />
-              </div>
-            </div>
-
-            {/* Form fields */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-2">
-                <label htmlFor="name" className="block">
-                  Full Name:
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="mt-1 input-target-set-field w-full"
-                  placeholder="Enter Your Name"
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label htmlFor="email" className="block">
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="mt-1 input-target-set-field w-full"
-                  placeholder="Enter Your Email"
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label htmlFor="phone" className="block">
-                  Phone:
-                </label>
-                <div className="mt-1">
-                  <PhoneInput
-                    country={"us"}
-                    value={phone}
-                    onChange={(value) => setPhone(value)}
-                    inputClass="input-target-set-field !w-full phone-input-target !h-auto"
-                    buttonClass="!bg-transparent"
-                    dropdownClass="!bg-white"
-                    enableSearch={true}
-                  />
+                {/* Profile Image Avatar */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-[-45px] h-[100px] w-[100px] rounded-[2rem] border-[6px] border-white shadow-xl overflow-hidden group">
+                  <img src={my_pic} alt="Profile" className="h-full w-full object-cover" />
+                  <label className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                    <IoCameraSharp className="text-white" size={24} />
+                    <input type="file" className="hidden" />
+                  </label>
                 </div>
               </div>
 
-              <div className="md:col-span-2">
-                <label htmlFor="country" className="block">
-                  Country:
-                </label>
-                <input
-                  type="text"
-                  id="country"
-                  className="mt-1 input-target-set-field w-full"
-                  placeholder="Enter Your Country"
-                />
+              {/* Input Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <CustomInput label="Full Name" placeholder="John Doe" id="name" />
+                <CustomInput label="Email Address" placeholder="john@example.com" id="email" type="email" />
+                
+                <div className="space-y-2">
+                  <label className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-400 ml-1">Phone Number</label>
+                  <PhoneInput
+                    country={"us"}
+                    value={phone}
+                    onChange={setPhone}
+                    inputStyle={{
+                      width: '100%',
+                      height: '56px',
+                      borderRadius: '1rem',
+                      border: '2px solid transparent',
+                      backgroundColor: '#f8fafc',
+                      fontSize: '14px',
+                      fontWeight: '600'
+                    }}
+                    buttonStyle={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      paddingLeft: '10px'
+                    }}
+                  />
+                </div>
+
+                <CustomInput label="Country" placeholder="United States" id="country" />
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="mt-5 flex justify-end gap-3">
+            {/* Sticky Footer Buttons */}
+            <div className="p-6 border-t border-slate-50 flex justify-end gap-3 bg-slate-50/50">
               <button
                 type="button"
                 onClick={handleCloseWithAnimation}
-                className="rounded-[10px] border border-red-400 bg-transparent py-3 px-4 text-red-400 cursor-pointer hover:text-red-500 hover:border-red-500 transition-all"
+                className="px-6 cursor-pointer py-3 rounded-xl font-black uppercase tracking-widest text-[11px] text-slate-500 hover:bg-slate-100 transition-all"
               >
                 Cancel
               </button>
-
               <button
                 type="submit"
-                className="rounded-[10px] bg-green-400 py-3 px-4 text-white cursor-pointer hover:bg-green-600 transition-all"
+                className="px-8 py-3 cursor-pointer rounded-xl font-black uppercase tracking-widest text-[11px] bg-slate-900 text-white hover:bg-[#ff5b07] shadow-lg shadow-slate-200 transition-all"
               >
-                Update
+                Save Changes
               </button>
             </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </>
   );
 };
+
+// Internal Helper Component for clean code
+const CustomInput = ({ label, placeholder, id, type = "text" }: any) => (
+  <div className="space-y-2">
+    <label htmlFor={id} className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-400 ml-1">
+      {label}
+    </label>
+    <input
+      type={type}
+      id={id}
+      placeholder={placeholder}
+      className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-orange-100 transition-all outline-none font-semibold text-slate-700 text-sm"
+    />
+  </div>
+);
 
 export default EditProfilePopup;

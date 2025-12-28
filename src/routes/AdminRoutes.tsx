@@ -9,6 +9,7 @@ import Media from "../pages/admin/Media";
 import Settings from "../pages/admin/Settings";
 import ProfileSettings from "../pages/admin/ProfileSettings";
 import PrivateRoute from "./PrivateAdminRoute";
+import PageNotFound from "../pages/website/PageNotFound";
 
 const AdminRoutes: React.FC = () => {
   return (
@@ -22,7 +23,9 @@ const AdminRoutes: React.FC = () => {
           <Route path="/admin/media" element={<PrivateRoute><Media /></PrivateRoute>} />
           <Route path="/admin/profile-settings" element={<PrivateRoute><ProfileSettings /></PrivateRoute>} />
           <Route path="/admin/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+          
         </Route>
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>
   );

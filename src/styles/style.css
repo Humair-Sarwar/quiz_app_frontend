@@ -132,70 +132,81 @@ box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 
-/* slide text animation */
+/* --- Professional Marquee Section --- */
 .slide-text-section {
-  /* background-color: #f0f0f0; */
-  padding: 8px 0;
-}
-
-.slide-text-section .scroller_item_1 {
-  display: flex;
-  margin: 0px 15px;
+  background-color: #0f172a; /* Slate-900 for premium feel */
+  padding: 24px 0;
   overflow: hidden;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.slide-text-section .text_scroller_1 ul {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0;
-  animation: scroll1 55s linear infinite;
-  padding: 0;
-}
-
-.slide-text-section .scroller_item_1 li {
-  color: black;
-  font-size: 20px;
-  font-weight: 700;
   position: relative;
-  list-style: none;
+  /* Creates the fade-out effect on left and right edges */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
+}
+
+.scroller_item_1 {
+  display: flex;
+  width: max-content;
+  flex-wrap: nowrap;
+}
+
+.scroller_item_1 ul {
   display: flex;
   align-items: center;
-  padding-left: 100px;
+  gap: 60px; /* Consistent spacing */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  animation: scroll-infinite 40s linear infinite;
 }
-.slide-text-section .scroller_item_1 li h3 {
-  font-size: 55px;
-  text-transform: capitalize;
-  font-weight: 600;
-  color: white;
-  white-space: nowrap;
-  margin-bottom: 0;
 
-  background-image: linear-gradient(
-    27deg,
-    rgba(66, 66, 66, 1),
-    #ff5b07
-  );
-  color: #0000;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+/* Pause on hover for better UX */
+.slide-text-section:hover ul {
+  animation-play-state: paused;
+}
+
+.scroller_item_1 li h3 {
+  font-size: 42px; /* Slightly smaller for better balance */
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0;
+  
+  /* High-end Gradient Text */
+  background: linear-gradient(90deg, #ff5b07, #ff9052);
   -webkit-background-clip: text;
   background-clip: text;
+  color: transparent;
+  
+  /* Subtle glow */
+  filter: drop-shadow(0 0 10px rgba(255, 91, 7, 0.2));
+  transition: filter 0.3s ease;
 }
 
-.slide-text-section .scroller_item_1 li img {
-  height: 45px;
-  margin-left: 30px;
-  margin-right: 40px;
+.scroller_item_1 li:hover h3 {
+  filter: drop-shadow(0 0 15px rgba(255, 91, 7, 0.5));
 }
 
-@keyframes scroll1 {
+@keyframes scroll-infinite {
+  from {
+    transform: translateX(0);
+  }
   to {
     transform: translateX(-100%);
   }
 }
-
 
 
 
@@ -452,4 +463,33 @@ color: white;
 }
 @keyframes l23 {
   100% {transform: rotate(1turn)}
+}
+
+
+
+
+
+
+
+
+
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* Optional: Stops animation when user hovers */
+.group:hover .animate-marquee {
+  animation-play-state: paused;
 }

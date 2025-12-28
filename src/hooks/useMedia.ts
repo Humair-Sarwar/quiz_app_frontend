@@ -26,6 +26,18 @@ export const useMediaUploadImage = () => {
   });
 };
 
+export const useMediaDeleteImage = () => {
+  
+  return useMutation<ImageResponse, unknown, string>({
+    mutationFn: (id: string) =>
+      
+      apiAuth
+        .delete(`/api/admin/image/${id}`)
+        .then((res) => res.data),
+  });
+};
+
+
 
 export const useMediaImagesShow = ({
   page,

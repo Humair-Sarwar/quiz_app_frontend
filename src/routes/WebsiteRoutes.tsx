@@ -9,7 +9,6 @@ import QuizListing from "../pages/website/QuizListing";
 
 import { handleError } from "../toast";
 import useWebsite from "../hooks/useWebsite";
-import PageNotFound from "../pages/website/PageNotFound";
 
 const WebsiteRoutes: React.FC = () => {
   const { data, error, isLoading } = useWebsite();
@@ -29,11 +28,12 @@ const WebsiteRoutes: React.FC = () => {
           />
           <Route path="categories" element={<CategoriesListingPage />} />
           <Route path="categories/:slug" element={<QuizListing />} />
+          
         </Route>
 
         <Route path="login" element={<Login />} />
         <Route path="join-now" element={<Signup />} />
-        <Route path="*" element={<PageNotFound />} />
+        
       </Routes>
     </>
   );

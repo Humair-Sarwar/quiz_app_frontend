@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 interface OverlayProps {
-  isVisible?: boolean; // controls fade-in/out
+  isVisible?: boolean; 
+  closeOverlay?: () => void;
 }
 
 const Overlay: React.FC<OverlayProps> = ({ isVisible }) => {
@@ -21,7 +22,7 @@ const Overlay: React.FC<OverlayProps> = ({ isVisible }) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-3 transition-opacity duration-300 ease-out ${
+      className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300 ease-out ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     ></div>
