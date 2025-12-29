@@ -9,6 +9,8 @@ import QuizListing from "../pages/website/QuizListing";
 
 import { handleError } from "../toast";
 import useWebsite from "../hooks/useWebsite";
+import ComingSoon from "../pages/website/ComingSoon";
+import Maintenance from "../pages/website/Maintenance";
 
 const WebsiteRoutes: React.FC = () => {
   const { data, error, isLoading } = useWebsite();
@@ -33,7 +35,8 @@ const WebsiteRoutes: React.FC = () => {
 
         <Route path="login" element={<Login />} />
         <Route path="join-now" element={<Signup />} />
-        
+        <Route path="coming-soon" element={<ComingSoon />} />
+        <Route path="maintenance" element={<Maintenance />} />
       </Routes>
     </>
   );
