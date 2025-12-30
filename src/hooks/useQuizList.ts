@@ -9,7 +9,9 @@ interface useQuizListProps{
     page?: number;
 }
 
-function useQuizList({search, category_slug, limit, page}: useQuizListProps) {
+
+
+export const useQuizList = ({search, category_slug, limit, page}: useQuizListProps) => {
     const fetchQuizList = () => apiPublic.get('/api/quiz-all-website', {
         params: {
             search,
@@ -24,4 +26,4 @@ function useQuizList({search, category_slug, limit, page}: useQuizListProps) {
   })
 }
 
-export default useQuizList
+

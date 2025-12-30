@@ -3,7 +3,7 @@ import { motion, type Variants } from "framer-motion"; // ✨ Type-safe animatio
 import coding from "../../assets/images/coding.png";
 import Pagination from "../../components/Pagination";
 import QuizPopup from "../../components/QuizPopup";
-import useQuizList from "../../hooks/useQuizList";
+import {useQuizList} from "../../hooks/useQuizList";
 import { handleError } from "../../toast";
 import { useLocation } from "react-router-dom";
 import { HiOutlineSearch, HiOutlineClock, HiOutlineClipboardList } from "react-icons/hi";

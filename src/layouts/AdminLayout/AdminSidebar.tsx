@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb, HiOutlineLogout } from "react-icons/hi";
 import { MdDashboard, MdPermMedia } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
@@ -28,6 +28,12 @@ interface AdminSidebarProps {
 }
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ showHideSidebar, handlehideSidebar }) => {
+  const navigate = useNavigate()
+
+  const handleLogout = ()=>{
+    localStorage.clear();
+    navigate("/login");
+  }
   
   const linkStyle = ({ isActive }: { isActive: boolean }) =>
     `text-[15px] font-medium transition-all duration-300 flex items-center gap-3 rounded-xl py-3 px-4 mb-1 group whitespace-nowrap ${
@@ -109,8 +115,8 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ showHideSidebar, handlehide
         {/* FOOTER */}
         <div className="mt-auto pt-6 border-t border-slate-50 flex-shrink-0">
           <button
-            className="w-full text-[15px] font-bold text-slate-500 flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 hover:text-red-600 transition-all duration-200 group whitespace-nowrap"
-            onClick={() => handlehideSidebar()}
+            className="w-full text-[15px] cursor-pointer font-bold text-slate-500 flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 hover:text-red-600 transition-all duration-200 group whitespace-nowrap"
+            onClick={() => {handlehideSidebar(); handleLogout()}}
           >
             <HiOutlineLogout className="text-xl group-hover:rotate-12 transition-transform flex-shrink-0" />
             <span>Logout Account</span>

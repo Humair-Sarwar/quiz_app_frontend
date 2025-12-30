@@ -152,8 +152,30 @@ const Users: React.FC = () => {
                       </td>
 
                       {/* Name */}
-                      <td className="px-6 py-4 font-bold text-slate-700 whitespace-nowrap">
-                        {user?.name || "N/A"}
+                      <td className="px-6 flex flex-col py-4 text-slate-700 whitespace-nowrap">
+                        <span className="text-sm font-bold text-slate-700">{user?.name || "N/A"}</span>
+                        <span className="text-[11px] text-slate-400 mt-0.5">
+                            Created:{" "}
+                            {new Date(user?.createdAt).toLocaleString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}
+                          </span>
+                          <span className="text-[11px] text-slate-400 mt-0.5">
+                            Last Updated:{" "}
+                            {new Date(user?.updatedAt).toLocaleString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}
+                          </span>
                       </td>
 
                       {/* Email */}

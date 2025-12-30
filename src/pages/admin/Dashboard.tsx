@@ -27,6 +27,7 @@ const Counter = ({ value, suffix = "" }: { value: string | number, suffix?: stri
 
 const Dashboard: React.FC = () => {
   const [search, setSearch] = useState('');
+  console.log(search)
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 p-6 lg:p-10 font-sans selection:bg-orange-100">
@@ -42,7 +43,7 @@ const Dashboard: React.FC = () => {
           </motion.div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-800">Quiz Admin</h1>
-            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>

@@ -88,9 +88,10 @@ const Signup: React.FC = () => {
       >
         <div className="bg-white p-8 md:p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white">
           <div className="text-center mb-10">
+            <NavLink to={'/'}>
             <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
               Create <span className="text-[#ff5b07]">Account</span>
-            </h1>
+            </h1></NavLink>
             <p className="text-slate-500 text-sm mt-2 font-medium">Join our community of learners today.</p>
           </div>
 

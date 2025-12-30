@@ -32,7 +32,6 @@ interface SelectedItem {
 }
 
 const Categories: React.FC = () => {
-  // --- LOGIC REMAINS 100% SAME AS YOUR ORIGINAL CODE ---
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const queryClient = useQueryClient();
   const delCategory = deleteCategory();
@@ -186,7 +185,6 @@ const Categories: React.FC = () => {
         </div>
       </div>
 
-      {/* MODERN TABLE CONTAINER */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] overflow-hidden">
         <div className="w-full overflow-x-auto">
           <table className="w-full text-left">
@@ -213,45 +211,45 @@ const Categories: React.FC = () => {
 
             <tbody className="divide-y divide-slate-100">
               {isLoading ? (
-  Array.from({ length: pageSize }).map((_, idx) => (
-    <tr key={idx} className="border-b border-slate-50">
-      {/* 1. Checkbox Skeleton */}
-      <td className="px-6 py-4">
-        <div className="w-4 h-4 bg-slate-100 rounded animate-pulse" />
-      </td>
-      
-      {/* 2. Image Skeleton */}
-      <td className="px-6 py-4">
-        <div className="w-12 h-12 bg-slate-100 rounded-xl animate-pulse" />
-      </td>
-      
-      {/* 3. Category Name Skeleton */}
-      <td className="px-6 py-4">
-        <div className="space-y-2">
-          <div className="h-4 bg-slate-100 rounded-md w-32 animate-pulse" />
-        </div>
-      </td>
-      
-      {/* 4. Slug Path Skeleton */}
-      <td className="px-6 py-4">
-        <div className="h-6 bg-slate-50 border border-slate-100 rounded-md w-20 animate-pulse" />
-      </td>
-      
-      {/* 5. Position Skeleton */}
-      <td className="px-6 py-4">
-        <div className="w-8 h-8 bg-orange-50/50 rounded-lg animate-pulse" />
-      </td>
-      
-      {/* 6. Actions Skeleton */}
-      <td className="px-6 py-4">
-        <div className="flex justify-center gap-2">
-          <div className="w-9 h-9 bg-slate-50 rounded-lg animate-pulse" />
-          <div className="w-9 h-9 bg-slate-50 rounded-lg animate-pulse" />
-        </div>
-      </td>
-    </tr>
-  ))
-) : data?.data?.length > 0 ? (
+                Array.from({ length: pageSize }).map((_, idx) => (
+                  <tr key={idx} className="border-b border-slate-50">
+                    {/* 1. Checkbox Skeleton */}
+                    <td className="px-6 py-4">
+                      <div className="w-4 h-4 bg-slate-100 rounded animate-pulse" />
+                    </td>
+
+                    {/* 2. Image Skeleton */}
+                    <td className="px-6 py-4">
+                      <div className="w-12 h-12 bg-slate-100 rounded-xl animate-pulse" />
+                    </td>
+
+                    {/* 3. Category Name Skeleton */}
+                    <td className="px-6 py-4">
+                      <div className="space-y-2">
+                        <div className="h-4 bg-slate-100 rounded-md w-32 animate-pulse" />
+                      </div>
+                    </td>
+
+                    {/* 4. Slug Path Skeleton */}
+                    <td className="px-6 py-4">
+                      <div className="h-6 bg-slate-50 border border-slate-100 rounded-md w-20 animate-pulse" />
+                    </td>
+
+                    {/* 5. Position Skeleton */}
+                    <td className="px-6 py-4">
+                      <div className="w-8 h-8 bg-orange-50/50 rounded-lg animate-pulse" />
+                    </td>
+
+                    {/* 6. Actions Skeleton */}
+                    <td className="px-6 py-4">
+                      <div className="flex justify-center gap-2">
+                        <div className="w-9 h-9 bg-slate-50 rounded-lg animate-pulse" />
+                        <div className="w-9 h-9 bg-slate-50 rounded-lg animate-pulse" />
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : data?.data?.length > 0 ? (
                 data.data.map((category: any, index: number) => (
                   <tr
                     key={index}
@@ -279,15 +277,37 @@ const Categories: React.FC = () => {
                                 }`
                               : no_image
                           }
-                          alt="cat"
+                          alt=""
                           className="h-full w-full object-cover rounded-[10px]"
                         />
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 flex flex-col">
                       <span className="text-[14px] font-bold text-slate-700 block">
                         {category?.category_name}
                       </span>
+                      <span className="text-[11px] text-slate-400 mt-0.5">
+                            Created:{" "}
+                            {new Date(category?.createdAt).toLocaleString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}
+                          </span>
+                          <span className="text-[11px] text-slate-400 mt-0.5">
+                            Last Updated:{" "}
+                            {new Date(category?.updatedAt).toLocaleString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}
+                          </span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="bg-slate-100 text-slate-500 px-2 py-1 rounded-md text-xs font-semibold border border-slate-200">
