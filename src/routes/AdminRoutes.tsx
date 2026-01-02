@@ -8,20 +8,26 @@ import Users from "../pages/admin/Users";
 import Media from "../pages/admin/Media";
 import Settings from "../pages/admin/Settings";
 import ProfileSettings from "../pages/admin/ProfileSettings";
+import PrivateRoute from "./PrivateAdminRoute";
+import ScrollToTop from "../components/ScrollToTop";
+import PageNotFound from "../pages/website/PageNotFound";
 
 const AdminRoutes: React.FC = () => {
   return (
     <>
       <Routes>
-        <Route element={<AdminLayout />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/categories" element={<Categories />} />
-          <Route path="/admin/quiz-list" element={<QuizList />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/media" element={<Media />} />
-          <Route path="/admin/profile-settings" element={<ProfileSettings />} />
-          <Route path="/admin/settings" element={<Settings />} />
+        <Route element={<><ScrollToTop/><AdminLayout /></>}>
+        
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/categories" element={<PrivateRoute><Categories /></PrivateRoute>} />
+          <Route path="/quiz-list" element={<PrivateRoute><QuizList /></PrivateRoute>} />
+          <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+          <Route path="/media" element={<PrivateRoute><Media /></PrivateRoute>} />
+          <Route path="/profile-settings" element={<PrivateRoute><ProfileSettings /></PrivateRoute>} />
+          <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+          
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

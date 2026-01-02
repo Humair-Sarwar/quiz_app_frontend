@@ -1,147 +1,140 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { HiOutlineLightBulb } from "react-icons/hi";
+import { NavLink, useNavigate } from "react-router-dom";
+import { HiOutlineLightBulb, HiOutlineLogout } from "react-icons/hi";
 import { MdDashboard, MdPermMedia } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa6";
 import { FaUserCog } from "react-icons/fa";
-import { IoLogOutOutline, IoSettingsSharp } from "react-icons/io5";
+import { IoSettingsSharp, IoClose } from "react-icons/io5";
 import Overlay from "../../components/Overlay";
-import { IoClose } from "react-icons/io5";
-
 
 const sidebarConstants = [
-  {
-    title: "Dashboard",
-    url: "/admin/dashboard",
-    icon: <MdDashboard className="text-[20px]"/>,
-  },
-  {
-    title: "Categories",
-    url: "/admin/categories",
-    icon: <AiFillProduct className="text-[20px]" />,
-  },
-  {
-    title: "Quiz List",
-    url: "/admin/quiz-list",
-    icon: <RiListSettingsLine className="text-[20px]" />,
-  },
-  {
-    title: "Users",
-    url: "/admin/users",
-    icon: <FaUsers className="text-[20px]" />
-,
-  },
-//   {
-//     title: "Email Templates",
-//     url: "/admin/email-templates",
-//     icon: <MdMarkEmailRead className="text-[20px]" />
-// ,
-//   },
-{
-    title: "Media",
-    url: "/admin/media",
-    icon: <MdPermMedia className="text-[20px]" />
-,
-  },
-  {
-    title: "Profile Settings",
-    url: "/admin/profile-settings",
-    icon: <FaUserCog className="text-[20px]" />
-,
-  },
-  {
-    title: "Settings",
-    url: "/admin/settings",
-    icon: <IoSettingsSharp className="text-[20px]" />
-
-  },
+  { title: "Dashboard", url: "/admin/dashboard", icon: <MdDashboard /> },
+  { title: "Categories", url: "/admin/categories", icon: <AiFillProduct /> },
+  { title: "Quiz List", url: "/admin/quiz-list", icon: <RiListSettingsLine /> },
+  { title: "Users", url: "/admin/users", icon: <FaUsers /> },
+  { title: "Media", url: "/admin/media", icon: <MdPermMedia /> },
 ];
 
-interface AdminSidebarProps{
-    showHideSidebar: boolean;
-    handlehideSidebar: ()=>void;
+const secondaryLinks = [
+  { title: "Profile Settings", url: "/admin/profile-settings", icon: <FaUserCog /> },
+  { title: "Settings", url: "/admin/settings", icon: <IoSettingsSharp /> },
+];
+
+interface AdminSidebarProps {
+  showHideSidebar: boolean;
+  handlehideSidebar: () => void;
 }
 
-const AdminSidebar: React.FC<AdminSidebarProps> = ({showHideSidebar, handlehideSidebar}) => {
-    
+const AdminSidebar: React.FC<AdminSidebarProps> = ({ showHideSidebar, handlehideSidebar }) => {
+  const navigate = useNavigate()
+
+  const handleLogout = ()=>{
+    localStorage.clear();
+    navigate("/login");
+  }
+  
+  const linkStyle = ({ isActive }: { isActive: boolean }) =>
+    `text-[15px] font-medium transition-all duration-300 flex items-center gap-3 rounded-xl py-3 px-4 mb-1 group whitespace-nowrap ${
+      isActive
+        ? "bg-[#ff5b07] text-white shadow-lg shadow-[#ff5b0740]"
+        : "text-slate-500 hover:bg-orange-50 hover:text-[#ff5b07]"
+    }`;
+
   return (
     <>
-      <div className={`w-[280px] ${showHideSidebar ? 'admin-sidebar-target-show' : 'admin-sidebar-target'} p-3 h-[100vh] fixed left-0 top-0 bg-white shadow-lg overflow-y-auto`}>
-       
-       <button
-                       type="button"
-                       onClick={handlehideSidebar}
-                       className="absolute right-4 bg-[#cccccc8c] hidden close-icon-sidebar-target rounded-4xl p-[3px] cursor-pointer transition-all text-black hover:bg-[#e04e00] hover:text-white"
-                     >
-                       <IoClose />
-                     </button>
-        <NavLink
-          to="/"
-          className="flex items-center gap-1 mx-5 my-3 justify-center"
+      {/* Scrollbar Customization - Inline CSS to keep it slim */}
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #e2e8f0; 
+          border-radius: 20px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #ff5b07;
+        }
+      `}</style>
+
+      <div
+        className={`w-[280px] ${
+          showHideSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        } transition-transform duration-300 p-5 h-screen fixed left-0 top-0 bg-white border-r border-slate-100 shadow-xl lg:shadow-none z-56 lg:z-51 flex flex-col overflow-x-hidden`}
+      >
+        {/* CLOSE BUTTON */}
+        <button
+          type="button"
+          onClick={handlehideSidebar}
+          className="lg:hidden absolute right-4 top-5 bg-slate-100 p-2 rounded-full hover:bg-orange-100 hover:text-[#ff5b07] transition-colors z-10"
         >
-          <h3 className="font-bold text-2xl primary-color-text">Quiz</h3>
-          <HiOutlineLightBulb className="text-3xl" />
-        </NavLink>
-        <h5 className="text-[13px] ms-2 font-semibold">Admin</h5>
-        <ul>
-          {sidebarConstants?.map((list) => (
-            <>
-            <li>
-              <NavLink
-                to={list?.url}
-                onClick={handlehideSidebar}
-                className={({ isActive }) =>
-    `text-[16px] transition-all flex items-center gap-2 rounded-[10px] py-2 px-3 mb-1 border-1 border-transparent ${
-      isActive
-        ? " bg-[#ff5b07] text-white "
-        : "hover:bg-[rgb(255, 248, 245)] hover:text-black hover:border-1 hover:border-[#ff5b07]"
-    }`
-  }
+          <IoClose size={20} />
+        </button>
 
+        {/* LOGO */}
+        <div className="flex items-center gap-2 px-4 mb-8 mt-2 flex-shrink-0">
+          <div className="w-10 h-10 bg-[#ff5b07] rounded-xl flex items-center justify-center shadow-lg shadow-orange-200">
+            <HiOutlineLightBulb className="text-white text-2xl" />
+          </div>
+          <h3 className="font-black text-2xl tracking-tight text-slate-800">
+            Quiz<span className="text-[#ff5b07]">Master</span>
+          </h3>
+        </div>
 
+        {/* MAIN MENU - Added 'custom-scrollbar' class */}
+        <div className="flex-grow overflow-y-auto overflow-x-hidden custom-scrollbar pr-2">
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Main Menu</p>
+          <ul className="mb-6">
+            {sidebarConstants.map((list, index) => (
+              <li key={index}>
+                <NavLink to={list.url} onClick={handlehideSidebar} className={linkStyle}>
+                  <span className="text-xl flex-shrink-0">{list.icon}</span>
+                  <span className="truncate">{list.title}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
 
-//   className={({ isActive }) =>
-//     `w-full inline-block p-2 rounded-[8px] ${
-//       isActive
-//         ? "active-btn-style"
-//         : " inactive-btn-style"
-//     }`
-//   }
-              >
-                {list?.icon} {list?.title}
-              </NavLink>
-            </li>
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Configuration</p>
+          <ul className="mb-4">
+            {secondaryLinks.map((list, index) => (
+              <li key={index}>
+                <NavLink to={list.url} onClick={handlehideSidebar} className={linkStyle}>
+                  <span className="text-xl flex-shrink-0">{list.icon}</span>
+                  <span className="truncate">{list.title}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-
-
-
-
-</>
-
-          ))}
-
-           <li>
-              <NavLink
-                to={''}
-                onClick={handlehideSidebar}
-                className={({ isActive }) =>
-    `text-[16px] transition-all flex items-center gap-2 rounded-[10px] py-2 px-3 mb-1 border-1 border-transparent ${
-      isActive
-        ? " bg-[#ff5b07] text-white "
-        : "hover:bg-[rgb(255, 248, 245)] hover:text-black hover:border-1 hover:border-[#ff5b07]"
-    }`
-  }
-
-              >
-                <IoLogOutOutline className="text-[20px]" />
-              Logout
-              </NavLink>
-            </li>
-        </ul>
+        {/* FOOTER */}
+        <div className="mt-auto pt-6 border-t border-slate-50 flex-shrink-0">
+          <button
+            className="w-full text-[15px] cursor-pointer font-bold text-slate-500 flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 hover:text-red-600 transition-all duration-200 group whitespace-nowrap"
+            onClick={() => {handlehideSidebar(); handleLogout()}}
+          >
+            <HiOutlineLogout className="text-xl group-hover:rotate-12 transition-transform flex-shrink-0" />
+            <span>Logout Account</span>
+          </button>
+          
+          <div className="mt-4 p-3 bg-slate-50 rounded-2xl flex items-center gap-3">
+             <div className="w-8 h-8 rounded-full bg-orange-100 border border-orange-200 flex items-center justify-center font-bold text-[#ff5b07] text-xs flex-shrink-0">
+               AD
+             </div>
+             <div className="flex flex-col overflow-hidden text-ellipsis">
+                <span className="text-[12px] font-bold text-slate-800 truncate">Admin Panel</span>
+                <span className="text-[10px] text-slate-400">v2.0.4 Live</span>
+             </div>
+          </div>
+        </div>
       </div>
-      {showHideSidebar && <Overlay isVisible={showHideSidebar ? true : false}/>}
+
+      {showHideSidebar && <Overlay isVisible={true} />}
     </>
   );
 };
