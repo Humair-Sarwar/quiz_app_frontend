@@ -21,7 +21,7 @@ const Users: React.FC = () => {
   const handleClosePopup = () => setViewCustomerQuiz(false);
   const [search, setSearch] = useState<string>("");
   const businessId = useSelector((state: RootState) => state.auth.user_id);
-  const [id, setId] = useState("");
+  // const [id, setId] = useState("");
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -213,7 +213,7 @@ const Users: React.FC = () => {
                         <button
                           onClick={() => {
                             setViewCustomerQuiz(true);
-                            setId(user?._id);
+                            
                             setViewAttQuiz(user?.attempted_quizzes);
                           }}
                           className="p-2.5 bg-white border cursor-pointer border-slate-100 rounded-xl text-orange-500 shadow-sm hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all active:scale-90"
