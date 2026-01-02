@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'; // ✨ Now being used below
 import { FaListCheck, FaUserGear, FaBarsStaggered } from "react-icons/fa6";
 import { HiOutlineLogout, HiOutlineLightningBolt, HiOutlineX } from "react-icons/hi";
 import my_pic from '../../assets/images/my-pic.jpg';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
+import { useProfileUser } from '../../hooks/useCustomer';
+import no_image from "../../assets/images/no_image.png";
 
 const UserSidebar: React.FC = () => {
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const navGroups = [
@@ -18,6 +23,8 @@ const UserSidebar: React.FC = () => {
       links: [{ path: "/user/profile-info", label: "Profile Settings", icon: FaUserGear }],
     }
   ];
+
+  
 
   return (
     <>
@@ -65,16 +72,32 @@ const UserSidebar: React.FC = () => {
 };
 
 // Sub-component to keep code clean and DRY
-const SidebarContent = ({ navGroups, setIsOpen }: { navGroups: any[], setIsOpen?: (val: boolean) => void }) => (
+const SidebarContent = ({ navGroups, setIsOpen }: { navGroups: any[], setIsOpen?: (val: boolean) => void }) =>{
+  const navigate = useNavigate()
+  const businessId = useSelector((state: RootState) => state.auth.user_id);
+  const { data } = useProfileUser({
+      user_id: businessId!,
+    });
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+  return (
   <div className="bg-white rounded-[2.5rem] p-6 h-full lg:p-0 overflow-y-auto max-h-screen lg:max-h-none shadow-2xl lg:shadow-none border border-slate-100 lg:border-none">
     {/* 1. User Mini Card */}
     <div className="mb-10 p-4 bg-slate-50 rounded-[2rem] border border-slate-100/50 flex items-center gap-4">
       <div className="relative">
-        <img src={my_pic} alt="User" className="w-12 h-12 rounded-2xl object-cover shadow-md" />
+        <img src={
+                            data?.data?.image
+                              ? `${import.meta.env.VITE_BASE_URL}/uploads/${
+                                  data?.data?.image
+                                }`
+                              : no_image
+                          } alt="User" className="w-12 h-12 rounded-2xl object-cover shadow-md" />
         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
       </div>
       <div>
-        <h4 className="text-sm font-black text-slate-800 leading-tight">Humair S.</h4>
+        <h4 className="text-sm font-black text-slate-800 leading-tight">{data?.data?.name}</h4>
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Quiz Pro</p>
       </div>
     </div>
@@ -128,7 +151,7 @@ const SidebarContent = ({ navGroups, setIsOpen }: { navGroups: any[], setIsOpen?
 
     {/* 4. Logout Action */}
     <div className='mt-8 pt-6 border-t border-slate-100 mb-4'>
-      <button className='w-full cursor-pointer flex items-center gap-3 px-5 py-4 rounded-[1.25rem] text-slate-400 font-bold text-[13px] hover:bg-red-50 hover:text-red-500 transition-all group'>
+      <button onClick={handleLogout} className='w-full cursor-pointer flex items-center gap-3 px-5 py-4 rounded-[1.25rem] text-slate-400 font-bold text-[13px] hover:bg-red-50 hover:text-red-500 transition-all group'>
         <div className="p-2 bg-slate-50 group-hover:bg-red-100 transition-colors rounded-xl">
           <HiOutlineLogout className="text-lg transition-transform group-hover:-translate-x-1" />
         </div>
@@ -137,5 +160,8 @@ const SidebarContent = ({ navGroups, setIsOpen }: { navGroups: any[], setIsOpen?
     </div>
   </div>
 );
+}
+  
+  
 
 export default UserSidebar;

@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import AdminRoutes from "./routes/AdminRoutes"
 import UserRoutes from "./routes/UserRoutes"
 import WebsiteRoutes from "./routes/WebsiteRoutes"
 import { ToastContainer } from 'react-toastify'
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { userAuthDataAdd } from "./features/auth/authSlice";
-import type { AppDispatch, RootState } from "./app/store";
+import type { AppDispatch } from "./app/store";
 
 
 
@@ -29,17 +29,20 @@ function App() {
     }
   }, [dispatch]);
 
-    const data = useSelector((state: RootState) => state.auth);
-    console.log(data, '000000---')
-
   return (
     <>
-    <ToastContainer/>
-      <WebsiteRoutes/>
-      <UserRoutes/>
-      <AdminRoutes/>
+      <ToastContainer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/admin/*" element={<AdminRoutes />} />
+
+          <Route path="/user/*" element={<UserRoutes />} />
+
+          <Route path="/*" element={<WebsiteRoutes />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
 export default App

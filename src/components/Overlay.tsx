@@ -22,7 +22,7 @@ const Overlay: React.FC<OverlayProps> = ({ isVisible }) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300 ease-out ${
+      className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-55 transition-opacity duration-300 ease-out ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     ></div>

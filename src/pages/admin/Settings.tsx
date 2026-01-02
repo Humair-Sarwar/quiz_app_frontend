@@ -12,8 +12,8 @@ import { MdDeleteForever, MdOutlinePostAdd } from "react-icons/md";
 import {
   FaFacebookF,
   FaInstagram,
+  FaLinkedin,
   FaTiktok,
-  FaWhatsapp,
 } from "react-icons/fa6";
 import {
   useGeneralGetSettings,
@@ -38,7 +38,7 @@ type SocialLinks = {
   facebook: string;
   instagram: string;
   tiktok: string;
-  whatsapp: string;
+  linkedin: string;
 };
 
 type WebsiteSettings = {
@@ -66,7 +66,7 @@ const Settings: React.FC = () => {
   const [imageUploadPanelFooter, setImageUploadPanelFooter] = useState<boolean>(false);
   
   const queryClient = useQueryClient();
-  const businessId = useSelector((state: RootState) => state.auth.user_id);
+  const businessId = useSelector((state: RootState) => state?.auth?.user_id);
   const updateGeneralSettings = useGeneralUpdateSettings();
   const updateSocialSettings = useSocialUpdateSettings();
   const websiteModeUpdateSettings = useWebsiteModeUpdateSettings();
@@ -99,7 +99,7 @@ const Settings: React.FC = () => {
       facebook: "",
       tiktok: "",
       instagram: "",
-      whatsapp: "",
+      linkedin: "",
     },
     website_services: {
       website_mode: {
@@ -148,7 +148,7 @@ const [imageShowFooter, setImageShowFooter] = useState<string | null>(websiteSet
           facebook: links.facebook || "",
           instagram: links.instagram || "",
           tiktok: links.tiktok || "",
-          whatsapp: links.whatsapp || "",
+          linkedin: links.linkedin || "",
         },
       }));
     }
@@ -530,10 +530,10 @@ const [imageShowFooter, setImageShowFooter] = useState<string | null>(websiteSet
                 placeholder: "https://tiktok.com/@yourhandle",
               },
               {
-                id: "whatsapp",
-                label: "WhatsApp",
-                icon: <FaWhatsapp className="text-green-600" />,
-                placeholder: "https://wa.me/yournumber",
+                id: "linkedin",
+                label: "LinkedIn",
+                icon: <FaLinkedin className="text-blue-600" />,
+                placeholder: "https://www.linkedin.com/yournumber",
               },
             ].map((social) => (
               <div key={social.id} className="space-y-1.5">

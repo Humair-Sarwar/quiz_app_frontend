@@ -65,8 +65,19 @@ const Header: React.FC = () => {
                 <NavLink to="/categories" className={(props) => `${navLinkStyles(props)} ${activeIndicator(props.isActive)}`}>Categories</NavLink>
               </li>
               <li>
-                <NavLink to="/faq" className={(props) => `${navLinkStyles(props)} ${activeIndicator(props.isActive)}`}>FAQs</NavLink>
-              </li>
+  <NavLink 
+    // className={(props) => `${navLinkStyles(props)} ${activeIndicator(props.isActive)}`}
+    to="/#faq-section" 
+    onClick={(e) => {
+      if (window.location.pathname === '/') {
+        e.preventDefault();
+        document.getElementById('faq-section')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }}
+  >
+    FAQs
+  </NavLink>
+</li>
             </ul>
           </nav>
 
@@ -105,7 +116,7 @@ const Header: React.FC = () => {
                       <hr className="my-1 border-slate-100" />
                       <button 
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 p-3 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                        className="w-full flex items-center gap-3 cursor-pointer p-3 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl transition-colors"
                       >
                         <IoLogOutOutline size={18} /> Logout
                       </button>
@@ -116,7 +127,7 @@ const Header: React.FC = () => {
                 {/* Logout Button (Direct) */}
                 <button 
                   onClick={handleLogout}
-                  className="p-2 text-slate-400 hover:text-red-500 transition-colors sm:hidden"
+                  className="p-2 text-slate-400 hover:text-red-500 cursor-pointer transition-colors sm:hidden"
                 >
                   <IoLogOutOutline size={24} />
                 </button>

@@ -16,6 +16,7 @@ import no_image from "../../assets/images/no_image.png";
 import { FiInbox } from "react-icons/fi";
 
 const Users: React.FC = () => {
+  const [viewAttQuiz, setViewAttQuiz] = useState<any>([]);
   const [viewCustomerQuiz, setViewCustomerQuiz] = useState<boolean>(false);
   const handleClosePopup = () => setViewCustomerQuiz(false);
   const [search, setSearch] = useState<string>("");
@@ -77,7 +78,7 @@ const Users: React.FC = () => {
         {/* --- Table Container --- */}
         <div className="bg-white rounded-[24px] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.04)] border border-slate-100 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm overflow-x-auto">
               <thead>
                 <tr className="bg-slate-50/80 border-b border-slate-100">
                   {[
@@ -194,18 +195,16 @@ const Users: React.FC = () => {
                         </div>
                       </td>
 
-                      {/* Country 1 */}
                       <td className="px-6 py-4">
                         <span className="px-3 py-1 bg-slate-100 rounded-full text-[12px] font-bold text-slate-600 flex items-center w-fit gap-1">
                           <IoGlobeOutline size={14} /> {user?.country || "N/A"}
                         </span>
                       </td>
 
-                      {/* Country 2 (Take Quiz's column as per your code) */}
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-1.5 text-slate-600 font-medium">
                           <IoNewspaperOutline className="text-orange-500" />
-                          {user?.country || "N/A"}
+                          {user?.attempted_quizzes?.length || "N/A"}
                         </div>
                       </td>
 
@@ -215,6 +214,7 @@ const Users: React.FC = () => {
                           onClick={() => {
                             setViewCustomerQuiz(true);
                             setId(user?._id);
+                            setViewAttQuiz(user?.attempted_quizzes);
                           }}
                           className="p-2.5 bg-white border cursor-pointer border-slate-100 rounded-xl text-orange-500 shadow-sm hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all active:scale-90"
                           title="View Quiz"
@@ -260,7 +260,7 @@ const Users: React.FC = () => {
       </div>
 
       {viewCustomerQuiz && (
-        <ViewUserQuiz id={id} handleClosePopup={handleClosePopup} />
+        <ViewUserQuiz attempts={viewAttQuiz} handleClosePopup={handleClosePopup} />
       )}
     </>
   );

@@ -38,7 +38,7 @@ type SocialLinkItem = {
   facebook: string;
   instagram: string;
   tiktok: string;
-  whatsapp: string;
+  linkedin: string;
 };
 
 type SocialInput = {

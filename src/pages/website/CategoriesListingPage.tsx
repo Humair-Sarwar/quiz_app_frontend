@@ -105,7 +105,7 @@ const CategoriesListingPage: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
-            className="py-20 text-center bg-white rounded-[3rem] border border-dashed border-slate-200"
+            className="py-20 text-center mb-10 bg-white rounded-[3rem] border border-dashed border-slate-200"
           >
             <p className="text-slate-400 text-lg font-medium">No categories found matching "{search}"</p>
           </motion.div>
@@ -165,7 +165,7 @@ const CategoryCard = ({ category }: { category: any }) => (
         <img
           src={!category?.image ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${category.image}`}
           alt={category?.category_name}
-          className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
       </div>
       <h3 className="text-lg font-black text-slate-800 group-hover:text-[#ff5b07] transition-colors leading-tight">

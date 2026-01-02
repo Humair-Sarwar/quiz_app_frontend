@@ -64,7 +64,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ showHideSidebar, handlehide
       <div
         className={`w-[280px] ${
           showHideSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        } transition-transform duration-300 p-5 h-screen fixed left-0 top-0 bg-white border-r border-slate-100 shadow-xl lg:shadow-none z-51 flex flex-col overflow-x-hidden`}
+        } transition-transform duration-300 p-5 h-screen fixed left-0 top-0 bg-white border-r border-slate-100 shadow-xl lg:shadow-none z-56 lg:z-51 flex flex-col overflow-x-hidden`}
       >
         {/* CLOSE BUTTON */}
         <button

@@ -45,8 +45,10 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
   const queryClient = useQueryClient();
   const createCategoryAPI = createCategory();
   const updateCategoryAPI = updateCategory();
-  
-  const [imageShow, setImageShow] = useState<string | null>(formData?.image || "");
+
+  const [imageShow, setImageShow] = useState<string | null>(
+    formData?.image || ""
+  );
   const [errors, setErrors] = useState<errosProps>({
     category_name: "",
     slug: "",
@@ -83,9 +85,11 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
     e.preventDefault();
     const newErrors: errosProps = {};
 
-    if (!formData?.category_name) newErrors.category_name = "Category name is required!";
+    if (!formData?.category_name)
+      newErrors.category_name = "Category name is required!";
     if (!formData?.slug) newErrors.slug = "Slug is required!";
-    if (!formData?.sort_order || formData?.sort_order <= 0) newErrors.sort_order = "Sort order is required!";
+    if (!formData?.sort_order || formData?.sort_order <= 0)
+      newErrors.sort_order = "Sort order is required!";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length == 0) {
@@ -145,7 +149,8 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
         else delete newErrors.slug;
       }
       if (name === "sort_order") {
-        if (!value || Number(value) <= 0) newErrors.sort_order = "Sort order must be > 0!";
+        if (!value || Number(value) <= 0)
+          newErrors.sort_order = "Sort order must be > 0!";
         else delete newErrors.sort_order;
       }
       return newErrors;
@@ -158,11 +163,14 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
     <>
       <Overlay isVisible={isVisible} />
 
-      <div className={`fixed inset-0 flex items-center justify-center p-4 z-50 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 translate-y-8"
-      }`}>
+      <div
+        className={`fixed inset-0 flex items-center justify-center p-4 z-60 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+          isVisible
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 translate-y-8"
+        }`}
+      >
         <div className="bg-white rounded-[32px] shadow-[0_25px_70px_-15px_rgba(0,0,0,0.2)] w-full max-w-xl relative overflow-hidden border border-slate-100">
-          
           {/* Header Accent Bar */}
           <div className="h-1.5 w-full bg-gradient-to-r from-[#ff5b07] via-orange-400 to-yellow-400"></div>
 
@@ -171,13 +179,19 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-[#ff5b07] shadow-inner">
-                  {component_type == 1 ? <IoMdAdd size={24} /> : <MdEdit size={24} />}
+                  {component_type == 1 ? (
+                    <IoMdAdd size={24} />
+                  ) : (
+                    <MdEdit size={24} />
+                  )}
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 tracking-tight leading-none">
                     {component_type == 1 ? "New Category" : "Modify Details"}
                   </h2>
-                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] mt-1.5">Administrative Console</p>
+                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] mt-1.5">
+                    Administrative Console
+                  </p>
                 </div>
               </div>
               <button
@@ -195,15 +209,21 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
                 <div className="h-28 w-28 rounded-[35px] bg-slate-100 p-1 ring-4 ring-slate-50 overflow-hidden transition-transform duration-500 group-hover:scale-[1.03]">
                   <img
                     onClick={() => setImageUploadPanel(true)}
-                    src={imageShow === "" ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${imageShow}`}
+                    src={
+                      imageShow === ""
+                        ? no_image
+                        : `${
+                            import.meta.env.VITE_BASE_URL
+                          }/uploads/${imageShow}`
+                    }
                     alt="Category"
                     className="h-full w-full object-cover rounded-[30px] cursor-pointer"
                   />
                 </div>
-                
+
                 {/* Image Action Buttons */}
                 <div className="absolute -bottom-2 -right-2 flex gap-1">
-                   <button
+                  <button
                     type="button"
                     onClick={() => setImageUploadPanel(true)}
                     className="bg-[#ff5b07] cursor-pointer text-white p-2.5 rounded-2xl shadow-lg hover:bg-slate-900 transition-all active:scale-90 border-2 border-white flex items-center gap-1"
@@ -233,7 +253,9 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
                 <input
                   type="text"
                   className={`w-full px-5 py-4 bg-slate-50 border-2 rounded-2xl outline-none transition-all font-semibold text-slate-800 placeholder:text-slate-300 ${
-                    errors.category_name ? "border-red-100 focus:border-red-400" : "border-transparent focus:border-orange-100 focus:bg-white"
+                    errors.category_name
+                      ? "border-red-100 focus:border-red-400"
+                      : "border-transparent focus:border-orange-100 focus:bg-white"
                   }`}
                   placeholder="e.g. Smart Gadgets"
                   name="category_name"
@@ -268,7 +290,9 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
                 <input
                   type="number"
                   className={`w-full px-5 py-4 bg-slate-50 border-2 rounded-2xl outline-none transition-all font-bold text-slate-800 ${
-                    errors.sort_order ? "border-red-100 focus:border-red-400" : "border-transparent focus:border-orange-100 focus:bg-white"
+                    errors.sort_order
+                      ? "border-red-100 focus:border-red-400"
+                      : "border-transparent focus:border-orange-100 focus:bg-white"
                   }`}
                   placeholder="01"
                   name="sort_order"
@@ -276,7 +300,9 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
                   onChange={handleChange}
                 />
                 {errors.sort_order && (
-                  <p className="text-red-500 text-[10px] font-bold mt-2 ml-1 uppercase italic">{errors.sort_order}</p>
+                  <p className="text-red-500 text-[10px] font-bold mt-2 ml-1 uppercase italic">
+                    {errors.sort_order}
+                  </p>
                 )}
               </div>
             </div>
@@ -292,10 +318,14 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
               </button>
 
               <button
-                disabled={createCategoryAPI.isPending || updateCategoryAPI.isPending}
+                disabled={
+                  createCategoryAPI.isPending || updateCategoryAPI.isPending
+                }
                 type="submit"
                 className={`flex-[2] cursor-pointer relative overflow-hidden py-4 px-6 bg-slate-900 text-white rounded-[18px] font-black text-[12px] uppercase tracking-[0.2em] transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98] ${
-                  (createCategoryAPI.isPending || updateCategoryAPI.isPending) ? "opacity-80 cursor-not-allowed" : "hover:bg-[#ff5b07] hover:shadow-orange-500/40"
+                  createCategoryAPI.isPending || updateCategoryAPI.isPending
+                    ? "opacity-80 cursor-not-allowed"
+                    : "hover:bg-[#ff5b07] hover:shadow-orange-500/40"
                 }`}
               >
                 {createCategoryAPI.isPending || updateCategoryAPI.isPending ? (
@@ -305,7 +335,9 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
                 ) : (
                   <div className="flex items-center justify-center gap-2">
                     <IoSparklesOutline size={16} />
-                    {component_type == 1 ? "Publish Category" : "Commit Changes"}
+                    {component_type == 1
+                      ? "Publish Category"
+                      : "Commit Changes"}
                   </div>
                 )}
               </button>

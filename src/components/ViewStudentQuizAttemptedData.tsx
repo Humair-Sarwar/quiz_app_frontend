@@ -3,14 +3,15 @@ import Overlay from "./Overlay";
 import { IoClose, IoAnalyticsOutline } from "react-icons/io5";
 import "react-phone-input-2/lib/style.css";
 import { HiOutlineLightBulb } from "react-icons/hi";
-import AttempedQuiz from "./AttempedQuiz";
+import AttempedCustomerQuiz from "./AttempedCustomerQuiz";
 
 interface ViewUserQuizProps {
   handleClosePopup: () => void;
   attempts?: any;
+  attDate?: any;
 }
 
-const ViewUserQuiz: React.FC<ViewUserQuizProps> = ({ handleClosePopup, attempts }) => {
+const ViewStudentQuizAttemptedData: React.FC<ViewUserQuizProps> = ({ handleClosePopup, attempts, attDate }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -84,8 +85,7 @@ const ViewUserQuiz: React.FC<ViewUserQuizProps> = ({ handleClosePopup, attempts 
             </div>
 
             <div className="relative">
-                {/* Yahan attempts pass kar diye hain */}
-                <AttempedQuiz attempts={attempts} />
+                <AttempedCustomerQuiz attempts={attempts} attDate={attDate}/>
             </div>
           </div>
 
@@ -110,4 +110,4 @@ const ViewUserQuiz: React.FC<ViewUserQuizProps> = ({ handleClosePopup, attempts 
   );
 };
 
-export default ViewUserQuiz;
+export default ViewStudentQuizAttemptedData;

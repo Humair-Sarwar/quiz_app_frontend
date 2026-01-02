@@ -18,6 +18,7 @@ import no_image from "../../assets/images/no_image.png";
 import DeletePopup from "../../components/DeletePopup";
 import { handleError, handleSuccess } from "../../toast";
 import { useQueryClient } from "@tanstack/react-query";
+import ViewAdminQuizList from "../../components/ViewAdminQuizList";
 
 // Option inside each question
 interface QuizOption {
@@ -47,12 +48,15 @@ interface FormDataProps {
 }
 
 const QuizList: React.FC = () => {
-    const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [handleViewDataQuiz, setHandleViewDataQuiz] = useState({});
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [addCategory, setAddCategory] = useState<boolean>(false);
   const [editCategory, setEditCategory] = useState<boolean>(false);
   const [deletePopup, setDeletPopup] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const deleteQuiz = useDeleteQuiz();
+  const [viewAdminQuizListPopup, setViewAdminQuizListPopup] =
+    useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<{
     category_id: string;
     category_name: string;
@@ -74,7 +78,7 @@ const QuizList: React.FC = () => {
         question_title: "",
         question_sort_order: 1,
         question_type: 1,
-        question_time: "",
+        question_time: "N/A",
         options: [
           {
             option_label: "",
@@ -111,26 +115,25 @@ const QuizList: React.FC = () => {
     setAddCategory(false);
     setEditCategory(false);
     setDeletPopup(false);
+    setViewAdminQuizListPopup(false);
   };
-const handleCloseWithAnimation = () => {
+  const handleCloseWithAnimation = () => {
     setIsVisible(false);
     setTimeout(() => handleClosePopup(), 300);
   };
-   const handleDelete = () => {
-      
-        deleteQuiz.mutate(
-          { business_id: businessId!, id: id! },
-          {
-            onSuccess: () => {
-              handleSuccess("Quiz Deleted Successfully!");
-              queryClient.invalidateQueries({ queryKey: ["admin-quiz"] });
-              handleCloseWithAnimation();
-            },
-            onError: () => handleError("Something went wrong!"),
-          }
-        );
-      
-    };
+  const handleDelete = () => {
+    deleteQuiz.mutate(
+      { business_id: businessId!, id: id! },
+      {
+        onSuccess: () => {
+          handleSuccess("Quiz Deleted Successfully!");
+          queryClient.invalidateQueries({ queryKey: ["admin-quiz"] });
+          handleCloseWithAnimation();
+        },
+        onError: () => handleError("Something went wrong!"),
+      }
+    );
+  };
 
   return (
     <>
@@ -289,7 +292,13 @@ const handleCloseWithAnimation = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center justify-center gap-1">
-                          <button className="p-2 text-slate-400 hover:text-orange-500 hover:bg-orange-50 rounded-xl transition-all cursor-pointer">
+                          <button
+                            onClick={() => {
+                              setViewAdminQuizListPopup(true);
+                              setHandleViewDataQuiz({...quiz})
+                            }}
+                            className="p-2 text-slate-400 hover:text-orange-500 hover:bg-orange-50 rounded-xl transition-all cursor-pointer"
+                          >
                             <IoEyeOutline size={18} />
                           </button>
                           <button
@@ -346,7 +355,10 @@ const handleCloseWithAnimation = () => {
                               });
 
                               setId(quiz?._id);
-                              setSelectedCategory({category_id: quiz?.category_id, category_name: quiz?.category_name})
+                              setSelectedCategory({
+                                category_id: quiz?.category_id,
+                                category_name: quiz?.category_name,
+                              });
                             }}
                             className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all cursor-pointer"
                           >
@@ -355,9 +367,9 @@ const handleCloseWithAnimation = () => {
 
                           <button
                             onClick={() => {
-                            setDeletPopup(true);
-                            setId(quiz._id);
-                          }}
+                              setDeletPopup(true);
+                              setId(quiz._id);
+                            }}
                             className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all cursor-pointer"
                           >
                             <MdDelete size={18} />
@@ -436,6 +448,11 @@ const handleCloseWithAnimation = () => {
           isVisible={isVisible}
           setIsVisible={setIsVisible}
         />
+      )}
+      {viewAdminQuizListPopup && (
+        <div className="fixed inset-0 z-[80]">
+          <ViewAdminQuizList handleClosePopup={handleClosePopup} handleViewDataQuiz={handleViewDataQuiz}/>
+        </div>
       )}
     </>
   );

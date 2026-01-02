@@ -479,17 +479,16 @@ color: white;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    /* -50% is correct because we have two identical sets */
+    transform: translateX(-50%);
   }
 }
 
 .animate-marquee {
   display: flex;
-  width: max-content;
   animation: marquee 30s linear infinite;
 }
 
-/* Optional: Stops animation when user hovers */
 .group:hover .animate-marquee {
   animation-play-state: paused;
 }

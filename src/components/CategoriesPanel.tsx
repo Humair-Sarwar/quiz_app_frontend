@@ -35,7 +35,7 @@ const CategoriesPanel: React.FC<CategoriesPanelProps> = memo(
     // Handle category selection
     const handleSelect = (id: string, title: string) => {
       setSelectedCategory({category_id: id, category_name: title});
-      handleClosePopupHS(); // Close panel
+      handleClosePopupHS();
     };
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value);
@@ -71,7 +71,7 @@ const CategoriesPanel: React.FC<CategoriesPanelProps> = memo(
             placeholder="Search categories..."
           />
 
-          <ul className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
+          <ul className="space-y-2 max-h-[100%] overflow-y-auto custom-scrollbar">
             {isLoading ? (
               <p className="text-center text-gray-400 py-10">Loading...</p>
             ) : adminCategories?.data?.length > 0 ? (

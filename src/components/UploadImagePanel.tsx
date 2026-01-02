@@ -218,31 +218,31 @@ const UploadImagePanel: React.FC<ImageUploadProps> = ({
               }`}
             >
               {isLoading ? (
-                            <div
-                              className={`grid gap-3 grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-6`}
-                            >
-                              {Array.from({ length: pageSize }).map((_, idx) => (
-                                <div
-                                  key={idx}
-                                  className="relative aspect-square rounded-xl overflow-hidden border border-slate-100 bg-white p-1.5"
-                                >
-                                  {/* Main Image Area Placeholder */}
-                                  <div className="w-full h-full bg-slate-100 animate-pulse rounded-lg flex items-center justify-center">
-                                    <IoImagesOutline className="text-slate-200" size={24} />
-                                  </div>
-              
-                                  {/* Bottom Detail Bar (mimics the overlay/filename area) */}
-                                  <div className="absolute bottom-3 left-3 right-3 flex gap-2">
-                                    <div className="h-2 bg-slate-200/60 rounded-full w-2/3 animate-pulse" />
-                                    <div className="h-2 bg-slate-200/60 rounded-full w-1/3 animate-pulse" />
-                                  </div>
-              
-                                  {/* Subtle shimmer effect overlay */}
-                                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
-                                </div>
-                              ))}
-                            </div>
-                          ) : data?.data?.length > 0 ? (
+                <div
+                  className={`grid gap-3 grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-6`}
+                >
+                  {Array.from({ length: pageSize }).map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="relative aspect-square rounded-xl overflow-hidden border border-slate-100 bg-white p-1.5"
+                    >
+                      {/* Main Image Area Placeholder */}
+                      <div className="w-full h-full bg-slate-100 animate-pulse rounded-lg flex items-center justify-center">
+                        <IoImagesOutline className="text-slate-200" size={24} />
+                      </div>
+
+                      {/* Bottom Detail Bar (mimics the overlay/filename area) */}
+                      <div className="absolute bottom-3 left-3 right-3 flex gap-2">
+                        <div className="h-2 bg-slate-200/60 rounded-full w-2/3 animate-pulse" />
+                        <div className="h-2 bg-slate-200/60 rounded-full w-1/3 animate-pulse" />
+                      </div>
+
+                      {/* Subtle shimmer effect overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+                    </div>
+                  ))}
+                </div>
+              ) : data?.data?.length > 0 ? (
                 data.data.map((img: any, index: number) => (
                   <div
                     onClick={() => handleLoadImg(img?.image)}

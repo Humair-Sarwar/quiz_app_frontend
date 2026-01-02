@@ -33,7 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   
   // Options list ko thoda bada rakha hai scroll check karne ke liye
-  const options = [2, 5, 10, 15, 20, 25, 30, 40, 50, 60, 100];
+  const options = [10, 15, 25, 30, 50, 60];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

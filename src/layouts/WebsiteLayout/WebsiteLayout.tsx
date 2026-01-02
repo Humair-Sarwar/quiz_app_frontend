@@ -10,6 +10,9 @@ interface WebsiteLayoutProps{
     footer_logo: string,
     show_whatsapp_icon: boolean,
     whatsapp_no: number
+    social_links: any;
+    phone: string;
+    email: string;
   },
   isLoading: boolean
 }

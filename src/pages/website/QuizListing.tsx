@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion"; // ✨ Type-safe animation imports
-import coding from "../../assets/images/coding.png";
+import no_image from "../../assets/images/no_image.png";
 import Pagination from "../../components/Pagination";
 import QuizPopup from "../../components/QuizPopup";
 import {useQuizList} from "../../hooks/useQuizList";
 import { handleError } from "../../toast";
 import { useLocation } from "react-router-dom";
 import { HiOutlineSearch, HiOutlineClock, HiOutlineClipboardList } from "react-icons/hi";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../app/store";
 
 // --- ANIMATION VARIANTS ---
 const containerVariants: Variants = {
@@ -29,15 +31,18 @@ const cardVariants: Variants = {
 };
 
 const QuizListing: React.FC = () => {
+  const businessId = useSelector((state: RootState) => state.auth.user_id);
+  const [user_attempted_quiz_id, set_user_attempted_quiz_id]=useState("")
   const location = useLocation();
   const slug = location.pathname.split("/").pop() || "";
-  
+  const [quiz_id, set_quiz_id] = useState<string>("")
   const [search, setSearch] = useState<string>("");
   const [startQuiz, setStartQuiz] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
 
   const { data, error, isLoading } = useQuizList({
+    user_id: businessId,
     search,
     category_slug: slug,
     limit: pageSize,
@@ -94,7 +99,7 @@ const QuizListing: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-20 bg-white rounded-[3rem] border border-dashed border-slate-200"
+            className="text-center py-20 mb-10 bg-white rounded-[3rem] border border-dashed border-slate-200"
           >
              <p className="text-slate-500 font-medium text-lg">No quizzes found in this category.</p>
           </motion.div>
@@ -116,9 +121,9 @@ const QuizListing: React.FC = () => {
                 {/* Image / Icon Container */}
                 <div className="relative w-full aspect-video bg-slate-50 rounded-[2rem] mb-6 flex items-center justify-center overflow-hidden group-hover:bg-orange-50 transition-colors">
                   <img 
-                    src={coding} 
-                    alt="quiz" 
-                    className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-500" 
+                    src={!quiz?.image ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${quiz?.image}`}
+          alt={quiz?.category_name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                   />
                   <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-black uppercase text-slate-600 border border-white">
                     Free
@@ -133,20 +138,20 @@ const QuizListing: React.FC = () => {
                 <div className="flex items-center gap-4 text-slate-400 text-xs font-bold mb-8">
                   <div className="flex items-center gap-1.5">
                     <HiOutlineClipboardList className="text-[#ff5b07]" />
-                    10 Questions
+                    {quiz?.total_questions} Questions
                   </div>
                   <div className="flex items-center gap-1.5">
                     <HiOutlineClock className="text-[#ff5b07]" />
-                    15 Mins
+                    {quiz?.quiz_time}
                   </div>
                 </div>
 
                 {/* Button */}
                 <button
-                  onClick={() => setStartQuiz(true)}
+                  onClick={() => {setStartQuiz(true); set_quiz_id(quiz?._id); set_user_attempted_quiz_id(quiz?.attempted_quiz_id)}}
                   className="mt-auto w-full cursor-pointer py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-[#ff5b07] shadow-lg shadow-slate-200 hover:shadow-orange-200 transition-all active:scale-95"
                 >
-                  Start Quiz
+                   {quiz?.attempted_quiz_id ? 'Retake' : 'Start Quiz'}
                 </button>
               </motion.div>
             ))}
@@ -176,7 +181,7 @@ const QuizListing: React.FC = () => {
         </motion.div>
       </div>
 
-      {startQuiz && <QuizPopup onClose={() => setStartQuiz(false)} />}
+      {startQuiz && <QuizPopup onClose={() => setStartQuiz(false)} quiz_id={quiz_id} user_attempted_quiz_id={user_attempted_quiz_id}/>}
     </div>
   );
 };

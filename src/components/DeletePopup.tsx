@@ -32,7 +32,7 @@ const DeletePopup: React.FC<DeletePopupProps> = ({
       <Overlay isVisible={isVisible} />
 
       <div
-        className={`fixed inset-0 flex items-center justify-center p-4 z-50 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+        className={`fixed inset-0 flex items-center justify-center p-4 z-60 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isVisible
             ? "opacity-100 scale-100"
             : "opacity-0 scale-95 translate-y-10"

@@ -7,8 +7,9 @@ import FAQAccordion from "../../components/FAQs";
 import useWebsiteCategories from "../../hooks/useWebsiteCategories";
 import { handleError } from "../../toast";
 import no_image from "../../assets/images/no_image.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineRocketLaunch, HiOutlineTrophy, HiOutlineBolt } from "react-icons/hi2";
+import { StepSection } from "../../components/StepSection";
 
 const responsive2 = {
   superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 5 },
@@ -33,6 +34,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
+  const navigate = useNavigate();
   const { data: website_categories, isLoading: loadingData, error } = useWebsiteCategories({ 
     search: "", 
     page: 1, 
@@ -40,13 +42,15 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
   });
 
   if (error) handleError('Something went wrong!');
-
+  const getStarted = ()=>{
+    navigate('/categories');
+  }
   return (
     <div className="bg-white selection:bg-orange-100 selection:text-orange-600 overflow-x-hidden">
       
       {/* --- HERO SECTION --- */}
       <section className="relative bg-gradient-to-b from-[#fff5ed] to-white overflow-hidden">
-        <div className="container mx-auto flex flex-col-reverse md:flex-row justify-between items-center min-h-[90vh] px-6 py-20 max-w-[1400px]">
+        <div className="container mx-auto flex flex-col md:flex-row gap-5 justify-between items-center min-h-[90vh] px-6 py-20 max-w-[1400px]">
           
           {/* Left Content */}
           <motion.div 
@@ -72,7 +76,7 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-5 justify-center md:justify-start items-center">
-              <button className="w-full sm:w-auto bg-[#ff5b07] text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-orange-200 hover:shadow-orange-400 hover:-translate-y-1.5 transition-all duration-300 active:scale-95">
+              <button onClick={getStarted} className="w-full cursor-pointer sm:w-auto bg-[#ff5b07] text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-orange-200 hover:shadow-orange-400 hover:-translate-y-1.5 transition-all duration-300 active:scale-95">
                 Get Started Free
               </button>
               <div className="flex -space-x-3 items-center">
@@ -107,24 +111,36 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
       </section>
 
       {/* --- TRUST & PROMO MARQUEE --- */}
-      {!isLoading && data?.promotional_items?.length > 0 && (
-        <section className="bg-slate-900 py-10 relative overflow-hidden group border-y border-white/5">
-          <div className="flex animate-marquee hover:[animation-play-state:paused]">
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center">
-                {data.promotional_items.map((item: any, idx: number) => (
-                  <div key={idx} className="flex items-center gap-4 px-12 shrink-0">
-                    <HiOutlineBolt className="text-[#ff5b07] text-2xl" />
-                    <span className="text-white text-lg font-black uppercase tracking-[0.2em] opacity-80">
-                      {item?.title}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ))}
+{!isLoading && data?.promotional_items?.length > 0 && (
+  <section className="bg-slate-900 py-10 relative overflow-hidden group border-y border-white/5">
+    {/* Wrapper for the animation */}
+    <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+      {/* Container 1 */}
+      <div className="flex items-center">
+        {data.promotional_items.map((item: any, idx: number) => (
+          <div key={`a-${idx}`} className="flex items-center gap-4 px-12 shrink-0">
+            <HiOutlineBolt className="text-[#ff5b07] text-2xl" />
+            <span className="text-white text-lg font-black uppercase tracking-[0.2em] opacity-80">
+              {item?.title}
+            </span>
           </div>
-        </section>
-      )}
+        ))}
+      </div>
+
+      {/* Container 2 (Exact Duplicate for Seamless Loop) */}
+      <div className="flex items-center">
+        {data.promotional_items.map((item: any, idx: number) => (
+          <div key={`b-${idx}`} className="flex items-center gap-4 px-12 shrink-0">
+            <HiOutlineBolt className="text-[#ff5b07] text-2xl" />
+            <span className="text-white text-lg font-black uppercase tracking-[0.2em] opacity-80">
+              {item?.title}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
 
       {/* --- CATEGORIES SECTION --- */}
       <section className="py-24 container mx-auto px-6 max-w-[1400px]">
@@ -175,7 +191,7 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
       </section>
 
       {/* --- FAQ SECTION --- */}
-      <section className="bg-slate-50/50 py-24 relative overflow-hidden">
+      <section id="faq-section" className="bg-slate-50/50 py-24 relative overflow-hidden">
         <div className="container mx-auto max-w-[1300px] px-6 relative z-10">
           <div className="flex flex-col lg:flex-row gap-20 items-start">
             
@@ -223,24 +239,26 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
           </div>
         </div>
       </section>
+
+      <StepSection />
     </div>
   );
 };
 
 const CategoryCard = ({ category }: { category: any }) => (
   <NavLink to={'/categories/' + category?.slug} className="group block">
-    <div className="bg-white border border-slate-100 p-10 rounded-[3rem] text-center transition-all duration-500 hover:shadow-[0_40px_80px_-15px_rgba(255,91,7,0.15)] hover:-translate-y-3 hover:border-orange-100 relative overflow-hidden h-full">
+    <div className="bg-white shadow-sm  border border-slate-100 p-10 rounded-[3rem] text-center transition-all duration-500 hover:shadow-[0_40px_80px_-15px_rgba(255,91,7,0.15)] hover:-translate-y-3 hover:border-orange-100 relative overflow-hidden h-full">
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-50 rounded-full group-hover:scale-150 transition-transform duration-700 -z-10"></div>
       
-      <div className="w-28 h-28 mx-auto mb-8 bg-white shadow-xl shadow-slate-100 rounded-[2rem] flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-slate-50">
+      <div className="w-45 h-45 mx-auto mb-8 bg-white shadow-xl shadow-slate-100 rounded-[2rem] flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-slate-50">
         <img 
           src={!category?.image ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${category.image}`} 
           alt={category?.category_name}
-          className="w-16 h-16 object-contain"
+          className="w-full h-full object-cover rounded-[2rem]"
         />
       </div>
       
-      <h3 className="text-2xl font-black text-slate-800 mb-4 group-hover:text-[#ff5b07] transition-colors">
+      <h3 className="text-2xl font-bold text-slate-800 mb-4 group-hover:text-[#ff5b07] transition-colors">
         {category?.category_name}
       </h3>
       
