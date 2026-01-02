@@ -3,14 +3,16 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'; // ✨ Now being used below
 import { FaListCheck, FaUserGear, FaBarsStaggered } from "react-icons/fa6";
 import { HiOutlineLogout, HiOutlineLightningBolt, HiOutlineX } from "react-icons/hi";
-import my_pic from '../../assets/images/my-pic.jpg';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
 import { useProfileUser } from '../../hooks/useCustomer';
 import no_image from "../../assets/images/no_image.png";
 
 const UserSidebar: React.FC = () => {
-  
+  const businessId = useSelector((state: RootState) => state.auth.user_id);
+  const { data } = useProfileUser({
+      user_id: businessId!,
+    });
   const [isOpen, setIsOpen] = useState(false);
 
   const navGroups = [
@@ -31,7 +33,11 @@ const UserSidebar: React.FC = () => {
       {/* Mobile Trigger Bar */}
       <div className="lg:hidden flex items-center justify-between bg-white p-4 rounded-3xl shadow-sm border border-slate-100 mb-6">
         <div className="flex items-center gap-3">
-          <img src={my_pic} alt="User" className="w-10 h-10 rounded-xl object-cover" />
+          <img src={data?.data?.image
+                              ? `${import.meta.env.VITE_BASE_URL}/uploads/${
+                                  data?.data?.image
+                                }`
+                              : no_image} alt="User" className="w-10 h-10 rounded-xl object-cover" />
           <span className="font-black text-slate-800 text-sm">Dashboard</span>
         </div>
         <button 
@@ -57,7 +63,7 @@ const UserSidebar: React.FC = () => {
               exit={{ y: 20, opacity: 0 }}
               className="h-full"
             >
-              <SidebarContent navGroups={navGroups} setIsOpen={setIsOpen} />
+              <SidebarContent navGroups={navGroups} data={data} setIsOpen={setIsOpen} />
             </motion.div>
           </motion.div>
         )}
@@ -65,19 +71,16 @@ const UserSidebar: React.FC = () => {
 
       {/* --- DESKTOP SIDEBAR --- */}
       <div className="hidden lg:block lg:w-[400px] lg:sticky lg:top-6 lg:h-fit bg-white rounded-[2.5rem] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-slate-100">
-        <SidebarContent navGroups={navGroups} />
+        <SidebarContent data={data} navGroups={navGroups} />
       </div>
     </>
   );
 };
 
 // Sub-component to keep code clean and DRY
-const SidebarContent = ({ navGroups, setIsOpen }: { navGroups: any[], setIsOpen?: (val: boolean) => void }) =>{
+const SidebarContent = ({ navGroups, setIsOpen, data }: { navGroups: any[], setIsOpen?: (val: boolean) => void; data: any }) =>{
   const navigate = useNavigate()
-  const businessId = useSelector((state: RootState) => state.auth.user_id);
-  const { data } = useProfileUser({
-      user_id: businessId!,
-    });
+  
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
