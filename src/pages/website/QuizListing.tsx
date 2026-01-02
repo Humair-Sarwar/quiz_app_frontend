@@ -5,7 +5,7 @@ import Pagination from "../../components/Pagination";
 import QuizPopup from "../../components/QuizPopup";
 import {useQuizList} from "../../hooks/useQuizList";
 import { handleError } from "../../toast";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HiOutlineSearch, HiOutlineClock, HiOutlineClipboardList } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
@@ -31,6 +31,7 @@ const cardVariants: Variants = {
 };
 
 const QuizListing: React.FC = () => {
+  const navigate = useNavigate()
   const businessId = useSelector((state: RootState) => state.auth.user_id);
   const [user_attempted_quiz_id, set_user_attempted_quiz_id]=useState("")
   const location = useLocation();
@@ -148,7 +149,9 @@ const QuizListing: React.FC = () => {
 
                 {/* Button */}
                 <button
-                  onClick={() => {setStartQuiz(true); set_quiz_id(quiz?._id); set_user_attempted_quiz_id(quiz?.attempted_quiz_id)}}
+                  onClick={() => {setStartQuiz(true); set_quiz_id(quiz?._id); set_user_attempted_quiz_id(quiz?.attempted_quiz_id); if(!businessId){
+                    navigate('/login')
+                  }}}
                   className="mt-auto w-full cursor-pointer py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-[#ff5b07] shadow-lg shadow-slate-200 hover:shadow-orange-200 transition-all active:scale-95"
                 >
                    {quiz?.attempted_quiz_id ? 'Retake' : 'Start Quiz'}

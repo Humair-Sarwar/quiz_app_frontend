@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import hero_banner_image from "../../assets/images/hero-banner.png";
+import hero_banner_image from "../../assets/images/hero.png";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import FAQAccordion from "../../components/FAQs";
