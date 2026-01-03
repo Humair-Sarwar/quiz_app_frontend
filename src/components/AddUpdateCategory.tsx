@@ -209,13 +209,7 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
                 <div className="h-28 w-28 rounded-[35px] bg-slate-100 p-1 ring-4 ring-slate-50 overflow-hidden transition-transform duration-500 group-hover:scale-[1.03]">
                   <img
                     onClick={() => setImageUploadPanel(true)}
-                    src={
-                      imageShow === ""
-                        ? no_image
-                        : `${
-                            import.meta.env.VITE_BASE_URL
-                          }/uploads/${imageShow}`
-                    }
+                    src={(imageShow === "" || imageShow === null) ? no_image : imageShow}
                     alt="Category"
                     className="h-full w-full object-cover rounded-[30px] cursor-pointer"
                   />

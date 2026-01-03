@@ -251,7 +251,7 @@ const UploadImagePanel: React.FC<ImageUploadProps> = ({
                   >
                     <img
                       src={
-                        import.meta.env.VITE_BASE_URL + "/uploads/" + img?.image
+                        img?.image
                       }
                       className="h-full w-full object-cover cursor-pointer"
                       alt=""
@@ -265,8 +265,7 @@ const UploadImagePanel: React.FC<ImageUploadProps> = ({
                           if (!img?.image) return;
                           navigator.clipboard
                             .writeText(
-                              import.meta.env.VITE_BASE_URL +
-                                "/uploads/" +
+                              
                                 img?.image
                             )
                             .then(() => handleSuccess("Link Copied!"));

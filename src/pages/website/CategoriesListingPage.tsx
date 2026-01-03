@@ -163,7 +163,7 @@ const CategoryCard = ({ category }: { category: any }) => (
     <div className="h-full bg-white border border-slate-100 p-6 rounded-[2.5rem] text-center transition-all duration-500 group-hover:shadow-[0_30px_60px_-15px_rgba(255,91,7,0.12)] group-hover:border-orange-100">
       <div className="aspect-square flex items-center justify-center mb-6 bg-slate-50 rounded-[2rem] group-hover:bg-orange-50 transition-colors duration-500 overflow-hidden relative">
         <img
-          src={!category?.image ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${category.image}`}
+          src={!category?.image ? no_image : category?.image}
           alt={category?.category_name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />

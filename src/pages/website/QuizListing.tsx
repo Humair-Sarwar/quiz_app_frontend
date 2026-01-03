@@ -32,7 +32,7 @@ const cardVariants: Variants = {
 
 const QuizListing: React.FC = () => {
   const navigate = useNavigate()
-  const businessId = useSelector((state: RootState) => state.auth.user_id);
+  const authLoginCheck = useSelector((state: RootState) => state.auth);
   const [user_attempted_quiz_id, set_user_attempted_quiz_id]=useState("")
   const location = useLocation();
   const slug = location.pathname.split("/").pop() || "";
@@ -43,7 +43,7 @@ const QuizListing: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
 
   const { data, error, isLoading } = useQuizList({
-    user_id: businessId,
+    user_id: authLoginCheck?.user_id,
     search,
     category_slug: slug,
     limit: pageSize,
@@ -122,7 +122,7 @@ const QuizListing: React.FC = () => {
                 {/* Image / Icon Container */}
                 <div className="relative w-full aspect-video bg-slate-50 rounded-[2rem] mb-6 flex items-center justify-center overflow-hidden group-hover:bg-orange-50 transition-colors">
                   <img 
-                    src={!quiz?.image ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${quiz?.image}`}
+                    src={!quiz?.image ? no_image : quiz?.image}
           alt={quiz?.category_name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                   />
@@ -149,9 +149,9 @@ const QuizListing: React.FC = () => {
 
                 {/* Button */}
                 <button
-                  onClick={() => {setStartQuiz(true); set_quiz_id(quiz?._id); set_user_attempted_quiz_id(quiz?.attempted_quiz_id); if(!businessId){
-                    navigate('/login')
-                  }}}
+                  onClick={() => {setStartQuiz(true); set_quiz_id(quiz?._id); set_user_attempted_quiz_id(quiz?.attempted_quiz_id); if (!authLoginCheck.user_id || authLoginCheck.user_type !== 1) {
+    navigate('/login');
+}}}
                   className="mt-auto w-full cursor-pointer py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-[#ff5b07] shadow-lg shadow-slate-200 hover:shadow-orange-200 transition-all active:scale-95"
                 >
                    {quiz?.attempted_quiz_id ? 'Retake' : 'Start Quiz'}

@@ -363,10 +363,9 @@ const TableRow = ({ name, email, category, score, status, image }: any) => (
         <div className="w-10 h-10 bg-slate-100 rounded-2xl border-2 border-white shadow-sm flex items-center justify-center font-black text-slate-400 group-hover:bg-orange-500 group-hover:text-white transition-all overflow-hidden">
   {image ? (
     <img
-      src={`${import.meta.env.VITE_BASE_URL}/uploads/${image}`}
+      src={image}
       alt={name}
       className="w-full h-full object-cover"
-      // Optional: Error handle karne ke liye agar image na mile
       onError={(e) => {
         (e.target as HTMLImageElement).style.display = 'none';
       }}

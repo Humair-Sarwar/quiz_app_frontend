@@ -44,7 +44,7 @@ type SocialLinks = {
 type WebsiteSettings = {
   general: {
     header_logo: string;
-    footer_logo: string;
+    footer_logo: string | null;
     site_title: string;
     email: string;
     phone: string;
@@ -318,7 +318,7 @@ const [imageShowFooter, setImageShowFooter] = useState<string | null>(websiteSet
                 <div className="relative">
                 <div onClick={() => setImageUploadPanelHeader(true)} className="relative h-20 w-20 rounded-2xl border-2 border-white shadow-lg overflow-hidden group">
                   <img
-                    src={imageShowHeader === "" ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${imageShowHeader}`}
+                    src={imageShowHeader === "" || imageShowHeader === null ? no_image : imageShowHeader}
                     alt="Header"
                     className="h-full w-full object-cover transition-transform group-hover:scale-110"
                   />
@@ -346,7 +346,7 @@ const [imageShowFooter, setImageShowFooter] = useState<string | null>(websiteSet
                 <div className="relative">
                 <div onClick={() => setImageUploadPanelFooter(true)} className="relative h-20 w-20 rounded-2xl border-2 border-white shadow-lg overflow-hidden group">
                   <img
-                    src={imageShowFooter === "" ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${imageShowFooter}`}
+                    src={imageShowFooter === "" || imageShowFooter === null ? no_image : imageShowFooter}
                     alt="Footer"
                     className="h-full w-full object-cover transition-transform group-hover:scale-110"
                   />

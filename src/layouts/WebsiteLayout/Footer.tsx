@@ -49,9 +49,9 @@ const Footer: React.FC<FooterProps> = ({ data, isLoading }) => {
                   {data?.footer_logo ? (
                     <img
                       className="h-12"
-                      src={`${import.meta.env.VITE_BASE_URL}/uploads/${
+                      src={
                         data?.footer_logo
-                      }`}
+                     }
                       alt=""
                     />
                   ) : (

@@ -252,7 +252,7 @@ const CategoryCard = ({ category }: { category: any }) => (
       
       <div className="w-45 h-45 mx-auto mb-8 bg-white shadow-xl shadow-slate-100 rounded-[2rem] flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-slate-50">
         <img 
-          src={!category?.image ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${category.image}`} 
+          src={!category?.image ? no_image : category.image}
           alt={category?.category_name}
           className="w-full h-full object-cover rounded-[2rem]"
         />

@@ -331,13 +331,7 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
                   >
                     <img
                       onClick={() => setImageUploadPanel(true)}
-                      src={
-                        imageShow === ""
-                          ? no_image
-                          : `${
-                              import.meta.env.VITE_BASE_URL
-                            }/uploads/${imageShow}`
-                      }
+                      src={(imageShow === "" || imageShow === null) ? no_image : imageShow}
                       alt="Quiz"
                       className="h-full w-full object-cover rounded-[1.8rem] cursor-pointer"
                     />

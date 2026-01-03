@@ -137,9 +137,9 @@ const Media: React.FC = () => {
                   className="group relative aspect-square rounded-xl overflow-hidden border border-slate-100 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
                 >
                   <img
-                    src={`${import.meta.env.VITE_BASE_URL}/uploads/${
+                    src={
                       img.image
-                    }`}
+                    }
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     alt="media"
                   />
@@ -151,9 +151,9 @@ const Media: React.FC = () => {
                         if (!img?.image) return;
                         navigator.clipboard
                           .writeText(
-                            `${import.meta.env.VITE_BASE_URL}/uploads/${
+                            
                               img?.image
-                            }`
+                            
                           )
                           .then(() => handleSuccess("Link copied!"))
                           .catch(() => handleError("Copy failed!"));

@@ -272,9 +272,9 @@ const Categories: React.FC = () => {
                         <img
                           src={
                             category?.image
-                              ? `${import.meta.env.VITE_BASE_URL}/uploads/${
+                              ? 
                                   category.image
-                                }`
+                               
                               : no_image
                           }
                           alt=""

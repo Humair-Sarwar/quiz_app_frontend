@@ -131,7 +131,7 @@ const ProfileSettings: React.FC = () => {
                   <div className="w-28 h-28 rounded-full border-4 border-white shadow-xl overflow-hidden cursor-pointer bg-slate-100 ring-1 ring-slate-100">
                     <img
                       onClick={() => setImageUploadPanel(true)}
-                      src={!imageShow ? no_image : `${import.meta.env.VITE_BASE_URL}/uploads/${imageShow}`}
+                      src={!imageShow ? no_image : imageShow}
                       alt="Profile"
                       className="h-full w-full object-cover transition-transform group-hover:scale-110"
                     />
