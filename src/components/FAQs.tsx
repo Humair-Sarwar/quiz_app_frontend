@@ -65,7 +65,7 @@ const FAQAccordion: React.FC = () => {
               </div>
 
               {/* Modern Plus/Close Icon Toggle */}
-              <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+              <div className={`flex-shrink-0 w-12 cursor-pointer h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                 isOpen 
                 ? "bg-slate-900 text-white rotate-45 shadow-lg shadow-slate-200" 
                 : "bg-white text-slate-400 border border-slate-100 group-hover:border-[#ff5b07] group-hover:text-[#ff5b07]"

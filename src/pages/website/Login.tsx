@@ -185,7 +185,7 @@ const Login: React.FC = () => {
               disabled={loginUser.isPending}
               className={`w-full bg-slate-900 ${
                 loginUser.isPending && "cursor-not-allowed!"
-              } text-white cursor-pointer py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-[#ff5b07] transition-all shadow-xl shadow-slate-200 hover:shadow-orange-200 flex justify-center items-center`}
+              } text-white cursor-pointer py-4 rounded-2xl font-semibold capitalize tracking-[0.2em] text-[14px] hover:bg-[#ff5b07] transition-all shadow-xl shadow-slate-200 hover:shadow-orange-200 flex justify-center items-center`}
             >
               {loginUser.isPending ? <SpinnerLoader /> : "Sign In to Account"}
             </motion.button>
@@ -206,7 +206,7 @@ const Login: React.FC = () => {
         </div>
 
         {/* Subtle Copyright/Trust Badge */}
-        <p className="text-center mt-8 text-slate-400 text-[11px] font-bold uppercase tracking-[0.3em]">
+        <p className="text-center mt-8 text-slate-400 text-[11px] font-semibold capitalize tracking-[0.3em]">
           Secure Quiz Environment • 2026
         </p>
       </motion.div>

@@ -3,10 +3,14 @@ import { motion, type Variants } from "framer-motion"; // ✨ Type-safe animatio
 import no_image from "../../assets/images/no_image.png";
 import Pagination from "../../components/Pagination";
 import QuizPopup from "../../components/QuizPopup";
-import {useQuizList} from "../../hooks/useQuizList";
+import { useQuizList } from "../../hooks/useQuizList";
 import { handleError } from "../../toast";
 import { useLocation, useNavigate } from "react-router-dom";
-import { HiOutlineSearch, HiOutlineClock, HiOutlineClipboardList } from "react-icons/hi";
+import {
+  HiOutlineSearch,
+  HiOutlineClock,
+  HiOutlineClipboardList,
+} from "react-icons/hi";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 
@@ -23,20 +27,20 @@ const containerVariants: Variants = {
 
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } // Custom "out-expo" ease
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }, // Custom "out-expo" ease
   },
 };
 
 const QuizListing: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const authLoginCheck = useSelector((state: RootState) => state.auth);
-  const [user_attempted_quiz_id, set_user_attempted_quiz_id]=useState("")
+  const [user_attempted_quiz_id, set_user_attempted_quiz_id] = useState("");
   const location = useLocation();
   const slug = location.pathname.split("/").pop() || "";
-  const [quiz_id, set_quiz_id] = useState<string>("")
+  const [quiz_id, set_quiz_id] = useState<string>("");
   const [search, setSearch] = useState<string>("");
   const [startQuiz, setStartQuiz] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
@@ -58,7 +62,7 @@ const QuizListing: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 pb-20 overflow-x-hidden">
       {/* --- HERO HEADER --- */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-white border-b border-slate-200 pt-16 pb-12 shadow-sm"
@@ -69,20 +73,29 @@ const QuizListing: React.FC = () => {
               <nav className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">
                 <span>Categories</span>
                 <span>/</span>
-                <span className="text-[#ff5b07]">{slug.replace(/-/g, ' ')}</span>
+                <span className="text-[#ff5b07]">
+                  {slug.replace(/-/g, " ")}
+                </span>
               </nav>
-              <h1 className="text-4xl lg:text-5xl font-black text-slate-900 capitalize tracking-tight">
-                {slug.replace(/-/g, ' ')} <span className="text-[#ff5b07]">Quizzes</span>
+              <h1 className="text-4xl lg:text-5xl font-semibold text-slate-900 capitalize tracking-tight">
+                {slug.replace(/-/g, " ")}{" "}
+                <span className="text-[#ff5b07]">Quizzes</span>
               </h1>
             </div>
 
             <div className="relative group w-full max-w-md">
-              <HiOutlineSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#ff5b07] transition-colors" size={20} />
+              <HiOutlineSearch
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#ff5b07] transition-colors"
+                size={20}
+              />
               <input
                 type="text"
                 placeholder="Find a specific quiz..."
                 className="w-full pl-12 pr-4 py-4 bg-slate-100 border-none rounded-2xl focus:ring-2 focus:ring-[#ff5b07]/20 focus:bg-white transition-all outline-none text-slate-700 font-medium"
-                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setPage(1);
+                }}
               />
             </div>
           </div>
@@ -91,29 +104,34 @@ const QuizListing: React.FC = () => {
 
       <div className="container mx-auto max-w-[1400px] py-12 px-6">
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {[...Array(pageSize)].map((_, i) => (
-              <div key={i} className="h-80 bg-white rounded-[2.5rem] border border-slate-100 animate-pulse" />
+              <div
+                key={i}
+                className="h-80 bg-white rounded-[2.5rem] border border-slate-100 animate-pulse"
+              />
             ))}
           </div>
         ) : data?.data?.length === 0 ? (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center py-20 mb-10 bg-white rounded-[3rem] border border-dashed border-slate-200"
           >
-             <p className="text-slate-500 font-medium text-lg">No quizzes found in this category.</p>
+            <p className="text-slate-500 font-medium text-lg">
+              No quizzes found in this category.
+            </p>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
           >
             {data?.data?.map((quiz: any) => (
-              <motion.div 
-                key={quiz._id} 
+              <motion.div
+                key={quiz._id}
                 variants={cardVariants}
                 whileHover={{ y: -8 }} // Interactive lift
                 whileTap={{ scale: 0.98 }}
@@ -121,10 +139,10 @@ const QuizListing: React.FC = () => {
               >
                 {/* Image / Icon Container */}
                 <div className="relative w-full aspect-video bg-slate-50 rounded-[2rem] mb-6 flex items-center justify-center overflow-hidden group-hover:bg-orange-50 transition-colors">
-                  <img 
+                  <img
                     src={!quiz?.image ? no_image : quiz?.image}
-          alt={quiz?.category_name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    alt={quiz?.category_name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-black uppercase text-slate-600 border border-white">
                     Free
@@ -132,7 +150,7 @@ const QuizListing: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-black text-slate-800 mb-4 group-hover:text-[#ff5b07] transition-colors line-clamp-2">
+                <h3 className="text-xl font-semibold text-slate-800 mb-4 group-hover:text-[#ff5b07] transition-colors line-clamp-2">
                   {quiz.quiz_title}
                 </h3>
 
@@ -149,12 +167,20 @@ const QuizListing: React.FC = () => {
 
                 {/* Button */}
                 <button
-                  onClick={() => {setStartQuiz(true); set_quiz_id(quiz?._id); set_user_attempted_quiz_id(quiz?.attempted_quiz_id); if (!authLoginCheck.user_id || authLoginCheck.user_type !== 1) {
-    navigate('/login');
-}}}
-                  className="mt-auto w-full cursor-pointer py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-[#ff5b07] shadow-lg shadow-slate-200 hover:shadow-orange-200 transition-all active:scale-95"
+                  onClick={() => {
+                    setStartQuiz(true);
+                    set_quiz_id(quiz?._id);
+                    set_user_attempted_quiz_id(quiz?.attempted_quiz_id);
+                    if (
+                      !authLoginCheck.user_id ||
+                      authLoginCheck.user_type !== 1
+                    ) {
+                      navigate("/login");
+                    }
+                  }}
+                  className="mt-auto w-full cursor-pointer py-3 bg-slate-900 text-white rounded-2xl font-semibold capitalize tracking-widest text-[14px] hover:bg-[#ff5b07] shadow-lg shadow-slate-200 hover:shadow-orange-200 transition-all active:scale-95"
                 >
-                   {quiz?.attempted_quiz_id ? 'Retake' : 'Start Quiz'}
+                  {quiz?.attempted_quiz_id ? "Retake" : "Start Quiz"}
                 </button>
               </motion.div>
             ))}
@@ -162,7 +188,7 @@ const QuizListing: React.FC = () => {
         )}
 
         {/* --- PAGINATION --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -170,10 +196,13 @@ const QuizListing: React.FC = () => {
         >
           <Pagination
             currentPage={data?.pagination?.currentPage}
-            prevClick={() => setPage(p => p - 1)}
-            nextClick={() => setPage(p => p + 1)}
+            prevClick={() => setPage((p) => p - 1)}
+            nextClick={() => setPage((p) => p + 1)}
             clickNum={(n: number) => setPage(n)}
-            handlePageSize={(e: any) => { setPageSize(Number(e.target.value)); setPage(1); }}
+            handlePageSize={(e: any) => {
+              setPageSize(Number(e.target.value));
+              setPage(1);
+            }}
             pageSize={pageSize}
             totalPages={totalPages}
             totalItems={totalItems}
@@ -184,7 +213,13 @@ const QuizListing: React.FC = () => {
         </motion.div>
       </div>
 
-      {startQuiz && <QuizPopup onClose={() => setStartQuiz(false)} quiz_id={quiz_id} user_attempted_quiz_id={user_attempted_quiz_id}/>}
+      {startQuiz && (
+        <QuizPopup
+          onClose={() => setStartQuiz(false)}
+          quiz_id={quiz_id}
+          user_attempted_quiz_id={user_attempted_quiz_id}
+        />
+      )}
     </div>
   );
 };
