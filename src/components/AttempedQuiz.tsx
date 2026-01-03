@@ -63,7 +63,7 @@ const AttempedQuiz: React.FC<Props> = ({ attempts }) => {
               {/* Accordion Content */}
               <div
                 className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                  isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+                  isOpen ? "max-h-auto opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
                 <div className="p-5 pt-0 border-t border-orange-100/50 mt-2">
