@@ -432,6 +432,11 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
                       <option value="30 sec">30 seconds</option>
                       <option value="1 min">1 minute</option>
                       <option value="5 min">5 minutes</option>
+                      <option value="10 min">10 minutes</option>
+                      <option value="20 min">20 minutes</option>
+                      <option value="30 min">30 minutes</option>
+                      <option value="40 min">40 minutes</option>
+                      <option value="50 min">50 minutes</option>
                     </select>
                     {renderError(errors.quiz_time)}
                   </div>
