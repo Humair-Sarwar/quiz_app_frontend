@@ -61,7 +61,7 @@ const ImageViewPopup: React.FC<ImageViewProps> = ({
           <div className="p-3 pt-16 bg-slate-50">
             <div className="relative group rounded-[22px] overflow-hidden bg-white border border-slate-200 shadow-inner">
               <img
-                src={import.meta.env.VITE_BASE_URL + "/uploads/" + image}
+                src={image}
                 alt="Full Preview"
                 className="w-full max-h-[70vh] object-contain block mx-auto transition-transform duration-700 hover:scale-105"
               />

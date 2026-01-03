@@ -28,10 +28,10 @@ const EditProfilePopup: React.FC<EditProfileProps> = ({
   // Previews for images
   const [previews, setPreviews] = useState({
     image: formData?.image
-      ? `${import.meta.env.VITE_BASE_URL}/uploads/${formData.image}`
+      ? formData.image
       : null,
     cover_image: formData?.cover_image
-      ? `${import.meta.env.VITE_BASE_URL}/uploads/${formData.cover_image}`
+      ? formData.cover_image
       : null,
   });
 

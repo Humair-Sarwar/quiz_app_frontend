@@ -111,9 +111,9 @@ const Profile: React.FC = () => {
               <img
                 src={
                   data?.data?.cover_image
-                    ? `${import.meta.env.VITE_BASE_URL}/uploads/${
+                    ? 
                         data?.data?.cover_image
-                      }`
+                  
                     : no_image
                 }
                 alt="cover"
@@ -123,9 +123,9 @@ const Profile: React.FC = () => {
                 <img
                   src={
                     data?.data?.image
-                      ? `${import.meta.env.VITE_BASE_URL}/uploads/${
+                      ? 
                           data?.data?.image
-                        }`
+                        
                       : no_image
                   }
                   alt="avatar"

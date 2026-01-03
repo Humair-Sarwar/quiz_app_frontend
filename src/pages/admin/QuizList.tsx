@@ -217,9 +217,9 @@ const QuizList: React.FC = () => {
                           <img
                             src={
                               quiz?.image
-                                ? `${import.meta.env.VITE_BASE_URL}/uploads/${
-                                    quiz.image
-                                  }`
+                                ? 
+                                    quiz?.image
+                                  
                                 : no_image
                             }
                             alt="Quiz"

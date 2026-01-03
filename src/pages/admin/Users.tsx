@@ -124,9 +124,9 @@ const Users: React.FC = () => {
                           <img
                             src={
                               user?.image
-                                ? `${import.meta.env.VITE_BASE_URL}/uploads/${
-                                    user.image
-                                  }`
+                                ? 
+                                    user?.image
+                                  
                                 : no_image
                             }
                             alt=""
@@ -141,9 +141,9 @@ const Users: React.FC = () => {
                           <img
                             src={
                               user?.cover_image
-                                ? `${import.meta.env.VITE_BASE_URL}/uploads/${
-                                    user.cover_image
-                                  }`
+                                ? 
+                                    user?.cover_image
+                                  
                                 : no_image
                             }
                             alt=""
