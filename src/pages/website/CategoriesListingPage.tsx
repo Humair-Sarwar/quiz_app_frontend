@@ -50,7 +50,7 @@ const CategoriesListingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 pb-20 overflow-x-hidden">
       {/* --- PAGE HEADER --- */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
@@ -68,7 +68,7 @@ const CategoriesListingPage: React.FC = () => {
                 <HiOutlineViewGrid size={18} />
                 Explore Knowledge
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-4xl lg:text-5xl font-semibold text-slate-900 tracking-tight">
                 All Categories
               </h1>
             </motion.div>
@@ -93,7 +93,7 @@ const CategoriesListingPage: React.FC = () => {
 
       <div className="container mx-auto max-w-[1400px] py-12 px-6">
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16">
             {[...Array(10)].map((_, i) => (
               <div key={i} className="bg-white p-6 rounded-[2rem] border border-slate-100 animate-pulse">
                 <div className="aspect-square bg-slate-100 rounded-2xl mb-4"></div>
@@ -168,7 +168,7 @@ const CategoryCard = ({ category }: { category: any }) => (
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
       </div>
-      <h3 className="text-lg font-black text-slate-800 group-hover:text-[#ff5b07] transition-colors leading-tight">
+      <h3 className="text-lg font-semibold text-slate-800 group-hover:text-[#ff5b07] transition-colors leading-tight">
         {category?.category_name}
       </h3>
       <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-3 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">

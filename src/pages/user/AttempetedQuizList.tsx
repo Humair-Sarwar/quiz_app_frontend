@@ -136,7 +136,7 @@ const AttempetedQuizList: React.FC = () => {
           </td>
 
           <td className="px-6 py-4">
-            <span className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-black uppercase rounded-lg tracking-wider group-hover:bg-orange-50 group-hover:text-orange-600 transition-colors">
+            <span className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase rounded-lg tracking-wider group-hover:bg-orange-50 group-hover:text-orange-600 transition-colors">
               {quiz?.category_name}
             </span>
           </td>
@@ -150,8 +150,8 @@ const AttempetedQuizList: React.FC = () => {
             <div className="flex items-center gap-4">
               <div className="flex flex-col flex-1 min-w-[100px]">
                 <div className="flex justify-between mb-1">
-                   <span className="text-[10px] font-black text-green-600 uppercase whitespace-nowrap">Correct: {quiz?.correct}</span>
-                   <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">{Math.round(correctPercent)}%</span>
+                   <span className="text-[10px] font-bold text-green-600 uppercase whitespace-nowrap">Correct: {quiz?.correct}</span>
+                   <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap">{Math.round(correctPercent)}%</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                   <motion.div 
@@ -163,8 +163,8 @@ const AttempetedQuizList: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-black text-red-400 uppercase whitespace-nowrap">Wrong: {quiz?.incorrect}</span>
-                <span className="text-[10px] font-black text-blue-400 uppercase whitespace-nowrap">Skip: {quiz?.skipped}</span>
+                <span className="text-[10px] font-bold text-red-400 uppercase whitespace-nowrap">Wrong: {quiz?.incorrect}</span>
+                <span className="text-[10px] font-bold text-blue-400 uppercase whitespace-nowrap">Skip: {quiz?.skipped}</span>
               </div>
             </div>
           </td>

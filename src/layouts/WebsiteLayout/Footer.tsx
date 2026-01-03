@@ -196,7 +196,7 @@ const Footer: React.FC<FooterProps> = ({ data, isLoading }) => {
       </div>
 
       {/* Footer Bottom Bar */}
-      <div className="border-t border-slate-100 py-8 bg-slate-50/50">
+      <div className="border-t border-slate-100 py-5 bg-slate-50/50">
         <div className="container mx-auto max-w-[1400px] px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-slate-500">
             © 2026{" "}

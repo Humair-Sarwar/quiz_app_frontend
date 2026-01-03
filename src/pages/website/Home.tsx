@@ -112,15 +112,15 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
 
       {/* --- TRUST & PROMO MARQUEE --- */}
 {!isLoading && data?.promotional_items?.length > 0 && (
-  <section className="bg-slate-900 py-10 relative overflow-hidden group border-y border-white/5">
+  <section className="bg-slate-900 py-7 relative overflow-hidden group border-y border-white/5">
     {/* Wrapper for the animation */}
     <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
       {/* Container 1 */}
       <div className="flex items-center">
         {data.promotional_items.map((item: any, idx: number) => (
           <div key={`a-${idx}`} className="flex items-center gap-4 px-12 shrink-0">
-            <HiOutlineBolt className="text-[#ff5b07] text-2xl" />
-            <span className="text-white text-lg font-black uppercase tracking-[0.2em] opacity-80">
+            <HiOutlineBolt className="text-[#ff5b07] md:text-[18px] text[12px]" />
+            <span className="text-white md:text-[18px] text[12px] font-medium uppercase tracking-[0.2em] opacity-80">
               {item?.title}
             </span>
           </div>
@@ -131,8 +131,8 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
       <div className="flex items-center">
         {data.promotional_items.map((item: any, idx: number) => (
           <div key={`b-${idx}`} className="flex items-center gap-4 px-12 shrink-0">
-            <HiOutlineBolt className="text-[#ff5b07] text-2xl" />
-            <span className="text-white text-lg font-black uppercase tracking-[0.2em] opacity-80">
+            <HiOutlineBolt className="text-[#ff5b07] md:text-[18px] text[12px]" />
+            <span className="text-white md:text-[18px] text[12px] font-medium uppercase tracking-[0.2em] opacity-80">
               {item?.title}
             </span>
           </div>
@@ -250,7 +250,7 @@ const CategoryCard = ({ category }: { category: any }) => (
     <div className="bg-white shadow-sm  border border-slate-100 p-10 rounded-[3rem] text-center transition-all duration-500 hover:shadow-[0_40px_80px_-15px_rgba(255,91,7,0.15)] hover:-translate-y-3 hover:border-orange-100 relative overflow-hidden h-full">
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-50 rounded-full group-hover:scale-150 transition-transform duration-700 -z-10"></div>
       
-      <div className="w-45 h-45 mx-auto mb-8 bg-white shadow-xl shadow-slate-100 rounded-[2rem] flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-slate-50">
+      <div className="min-w-fit h-45 mx-auto mb-8 bg-white shadow-xl shadow-slate-100 rounded-[2rem] flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-slate-50">
         <img 
           src={!category?.image ? no_image : category.image}
           alt={category?.category_name}
@@ -258,7 +258,7 @@ const CategoryCard = ({ category }: { category: any }) => (
         />
       </div>
       
-      <h3 className="text-2xl font-bold text-slate-800 mb-4 group-hover:text-[#ff5b07] transition-colors">
+      <h3 className="text-2xl font-semibold text-slate-800 mb-4 group-hover:text-[#ff5b07] transition-colors">
         {category?.category_name}
       </h3>
       

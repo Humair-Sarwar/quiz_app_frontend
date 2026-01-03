@@ -191,13 +191,13 @@ const Signup: React.FC = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={signupUser.isPending}
-              className={`w-full py-4 rounded-2xl cursor-pointer font-black uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-slate-200 flex justify-center items-center ${
+              className={`w-full py-4 rounded-2xl cursor-pointer font-semibold capitalize tracking-[0.2em] text-[14px] transition-all shadow-xl shadow-slate-200 flex justify-center items-center ${
                 signupUser.isPending 
                 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
                 : 'bg-slate-900 text-white hover:bg-[#ff5b07] hover:shadow-orange-200'
               }`}
             >
-              {signupUser.isPending ? <SpinnerLoader /> : 'Get Started Now'}
+              {signupUser.isPending ? <SpinnerLoader /> : 'Signup'}
             </motion.button>
           </form>
 
@@ -211,7 +211,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
 
-        <p className="text-center mt-8 text-slate-400 text-[11px] font-bold uppercase tracking-[0.3em]">
+        <p className="text-center mt-8 text-slate-400 text-[11px] font-semibold capitalize tracking-[0.3em]">
           Knowledge is Power • 2026
         </p>
       </motion.div>

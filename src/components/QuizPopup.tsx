@@ -84,22 +84,22 @@ const QuizPopup: React.FC<{ onClose: () => void; quiz_id: string; user_attempted
       user_id: localStorage.getItem("user_id") || "",
       quiz_id: quiz_id,
       quiz_title: quizData?.quiz_title || "",
-      question_group: questions.map((q: any, qIdx: number) => ({
-        question_title: q.question_title,
-        options: q.options.map((opt: any) => ({
-          option_label: opt.option_label,
-          answer: userAnswers[qIdx]?.selected_label === opt.option_label
+      question_group: questions?.map((q: any, qIdx: number) => ({
+        question_title: q?.question_title,
+        options: q?.options?.map((opt: any) => ({
+          option_label: opt?.option_label,
+          answer: userAnswers[qIdx]?.selected_label === opt?.option_label
         }))
       }))
     };
     saveQuiz(finalPayload, {
       onSuccess: (response) => {
-        setAttemptId(response.data._id);
+        setAttemptId(response?.data?._id);
         setIsFinished(true);
         queryClient.invalidateQueries({ queryKey: ["quiz-list-website"] });
         queryClient.invalidateQueries({ queryKey: ["student-attempted-quiz-list"] });
       },
-      onError: (err) => { console.error(err); alert("Failed to save quiz."); }
+      onError: (err) => { console.error(err); handleError("Failed to save quiz."); }
     });
   };
 
@@ -110,7 +110,6 @@ const QuizPopup: React.FC<{ onClose: () => void; quiz_id: string; user_attempted
       { user_id: businessId!, id: currentAttemptId! },
       {
         onSuccess: () => {
-          // Reset states for a fresh start
           setCurrentIndex(0);
           setUserAnswers([]);
           setIsFinished(false);
@@ -165,7 +164,7 @@ const QuizPopup: React.FC<{ onClose: () => void; quiz_id: string; user_attempted
                   <span className="text-xs font-black text-[#ff5b07] uppercase">Question {currentIndex + 1} of {questions.length}</span>
                   <ProgressBar progress={((currentIndex + 1) / questions.length) * 100} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-8">{currentQuestion?.question_title}</h3>
+                <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 mb-8">{currentQuestion?.question_title}</h3>
                 <div className="grid grid-cols-1 gap-4 mb-10">
                   {currentQuestion?.options.map((option: any, index: number) => {
                     const isSelected = userAnswers[currentIndex]?.selected_label === option.option_label;
@@ -175,7 +174,7 @@ const QuizPopup: React.FC<{ onClose: () => void; quiz_id: string; user_attempted
                           {isSelected && <div className="w-2 h-2 bg-white rounded-full" />}
                         </div>
                         <input type="radio" className="hidden" onChange={() => handleOptionSelect(option.option_label)} checked={isSelected} />
-                        <span className={`font-bold ${isSelected ? "text-slate-900" : "text-slate-500"}`}>{option.option_label}</span>
+                        <span className={`font-semibold ${isSelected ? "text-slate-900" : "text-slate-500"}`}>{option.option_label}</span>
                       </label>
                     );
                   })}
@@ -184,7 +183,7 @@ const QuizPopup: React.FC<{ onClose: () => void; quiz_id: string; user_attempted
                   <button onClick={() => currentIndex > 0 && setCurrentIndex(currentIndex - 1)} disabled={currentIndex === 0 || isSubmitting} className="flex-1 py-4 font-bold text-slate-400 disabled:opacity-30 cursor-pointer">
                     <div className="flex items-center justify-center gap-2"><IoIosArrowBack /> Previous</div>
                   </button>
-                  <button onClick={() => currentIndex === questions.length - 1 ? handleSubmit() : setCurrentIndex(currentIndex + 1)} disabled={!isOptionSelected || isSubmitting} className="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-black uppercase text-[11px] disabled:bg-slate-200 cursor-pointer hover:bg-[#ff5b07] transition-all">
+                  <button onClick={() => currentIndex === questions.length - 1 ? handleSubmit() : setCurrentIndex(currentIndex + 1)} disabled={!isOptionSelected || isSubmitting} className="flex-[2] py-3 bg-slate-900 text-white rounded-2xl font-bold capitalize text-[15px] disabled:bg-slate-200 cursor-pointer hover:bg-[#ff5b07] transition-all">
                     {isSubmitting ? "Submitting..." : (currentIndex === questions.length - 1 ? "Submit Quiz" : "Next Question")}
                   </button>
                 </div>
@@ -224,7 +223,7 @@ const ResultView = ({ result, isReview, setIsReview, onClose, onRetake, isRetaki
       {!isReview ? (
         <>
           <div className="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6"><SlBadge size={40} /></div>
-          <h2 className="text-3xl font-black text-slate-900 mb-2">Well Done!</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-2">{result?.score >=50 ? 'Well Done!' : 'Fail!'}</h2>
           <div className="flex justify-center mb-10"><CircularProgress progress={finalScore} /></div>
           <div className="grid grid-cols-2 gap-4 mb-10">
              <StatCard icon={<SlBadge />} label="Questions" value={result?.total_questions} color="bg-blue-50 text-blue-600" />
@@ -279,8 +278,8 @@ const ResultView = ({ result, isReview, setIsReview, onClose, onRetake, isRetaki
 
 const StatCard = ({ icon, label, value, color }: any) => (
   <div className={`p-4 rounded-3xl ${color} flex flex-col items-center justify-center transition-transform hover:scale-105`}>
-     <div className="text-2xl mb-1">{icon}</div>
-     <span className="text-xl font-black">{value}</span>
+     <div className="text-3xl mb-1">{icon}</div>
+     <span className="text-2xl font-bold">{value}</span>
      <span className="text-[10px] font-bold uppercase mt-1 opacity-70">{label}</span>
   </div>
 );
