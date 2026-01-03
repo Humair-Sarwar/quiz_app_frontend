@@ -6,12 +6,14 @@ import Profile from "../pages/user/Profile";
 import PrivateUserRoute from "./PrivateUserRoute";
 import ScrollToTop from "../components/ScrollToTop";
 import PageNotFound from "../pages/website/PageNotFound";
+import useWebsite from "../hooks/useWebsite";
 
 const UserRoutes: React.FC = () => {
+  const { data } = useWebsite();
   return (
     <>
       <Routes>
-        <Route element={<><ScrollToTop/><UserLayout /></>}>
+        <Route element={<><ScrollToTop/><UserLayout data={data?.data}/></>}>
           <Route path="/quiz-list" element={<PrivateUserRoute><AttempetedQuizList /></PrivateUserRoute>} />
           <Route path="/profile-info" element={<PrivateUserRoute><Profile /></PrivateUserRoute>} />
         </Route>

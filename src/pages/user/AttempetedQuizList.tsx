@@ -65,7 +65,7 @@ const AttempetedQuizList: React.FC = () => {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
-          <h2 className='text-2xl font-bold text-slate-900 flex items-center gap-3'>
+          <h2 className='md:text-2xl text-[20px] font-bold text-slate-900 flex items-center gap-3'>
             <div className="p-2 bg-orange-100 rounded-lg">
               <FaListCheck className="text-[#ff5b07]" size={20} />
             </div>
@@ -87,12 +87,12 @@ const AttempetedQuizList: React.FC = () => {
           <table className="w-full text-left border-collapse">
             <thead className="bg-slate-50/50 border-b border-slate-100">
               <tr>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400">Sr. #</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400">Quiz Name</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400">Category</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 text-center">Questions</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400">Score Stats</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 text-center">Actions</th>
+                <th className="px-6 py-5 text-[11px] whitespace-nowrap font-bold uppercase tracking-[0.15em] text-slate-400">Sr. #</th>
+                <th className="px-6 py-5 text-[11px] whitespace-nowrap font-bold uppercase tracking-[0.15em] text-slate-400">Quiz Name</th>
+                <th className="px-6 py-5 text-[11px] whitespace-nowrap font-bold uppercase tracking-[0.15em] text-slate-400">Category</th>
+                <th className="px-6 py-5 text-[11px] whitespace-nowrap font-bold uppercase tracking-[0.15em] text-slate-400 text-center">Questions</th>
+                <th className="px-6 py-5 text-[11px] whitespace-nowrap font-bold uppercase tracking-[0.15em] text-slate-400">Score Stats</th>
+                <th className="px-6 py-5 text-[11px] whitespace-nowrap font-bold uppercase tracking-[0.15em] text-slate-400 text-center">Actions</th>
               </tr>
             </thead>
 
@@ -125,10 +125,10 @@ const AttempetedQuizList: React.FC = () => {
           </td>
           
           <td className="px-6 py-4">
-            <div className="text-sm font-bold text-slate-800 group-hover:text-[#ff5b07] transition-colors line-clamp-1">
+            <div className="text-sm whitespace-nowrap font-bold text-slate-800 group-hover:text-[#ff5b07] transition-colors line-clamp-1">
               {quiz?.quiz_title}
             </div>
-            <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-tight">
+            <div className="text-[10px] whitespace-nowrap text-slate-400 font-semibold uppercase tracking-tight">
               {new Date(quiz?.attempted_on).toLocaleDateString("en-US", {
                 month: "short", day: "2-digit", year: "numeric"
               })} • {new Date(quiz?.attempted_on).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -150,8 +150,8 @@ const AttempetedQuizList: React.FC = () => {
             <div className="flex items-center gap-4">
               <div className="flex flex-col flex-1 min-w-[100px]">
                 <div className="flex justify-between mb-1">
-                   <span className="text-[10px] font-black text-green-600 uppercase">Correct: {quiz?.correct}</span>
-                   <span className="text-[10px] font-black text-slate-400">{Math.round(correctPercent)}%</span>
+                   <span className="text-[10px] font-black text-green-600 uppercase whitespace-nowrap">Correct: {quiz?.correct}</span>
+                   <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">{Math.round(correctPercent)}%</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                   <motion.div 
@@ -163,8 +163,8 @@ const AttempetedQuizList: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-black text-red-400 uppercase">Wrong: {quiz?.incorrect}</span>
-                <span className="text-[10px] font-black text-blue-400 uppercase">Skip: {quiz?.skipped}</span>
+                <span className="text-[10px] font-black text-red-400 uppercase whitespace-nowrap">Wrong: {quiz?.incorrect}</span>
+                <span className="text-[10px] font-black text-blue-400 uppercase whitespace-nowrap">Skip: {quiz?.skipped}</span>
               </div>
             </div>
           </td>

@@ -145,7 +145,7 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
       {/* --- CATEGORIES SECTION --- */}
       <section className="py-24 container mx-auto px-6 max-w-[1400px]">
         <motion.div 
-          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
+          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 cat-cl-target-set"
           initial={fadeInUp.initial}
           whileInView={fadeInUp.whileInView}
           viewport={fadeInUp.viewport}
@@ -228,7 +228,7 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
 
             {/* RIGHT SIDE */}
             <motion.div 
-              className="lg:w-7/12 w-full"
+              className="lg:w-7/12 w-full lg:mt-0 mt-20"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}

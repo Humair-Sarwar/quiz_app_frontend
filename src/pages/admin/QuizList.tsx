@@ -159,7 +159,7 @@ const QuizList: React.FC = () => {
             />
 
             <button
-              className="flex items-center gap-2 px-6 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold text-sm shadow-lg shadow-orange-200 transition-all active:scale-95 cursor-pointer"
+              className="flex items-center gap-2 px-6 justify-center py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold text-sm shadow-lg shadow-orange-200 transition-all active:scale-95 cursor-pointer"
               onClick={() => setAddCategory(true)}
             >
               <FaPlus /> Add New Quiz
