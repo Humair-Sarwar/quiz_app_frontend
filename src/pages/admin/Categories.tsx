@@ -201,11 +201,11 @@ const Categories: React.FC = () => {
                     className="w-4 h-4 accent-[#ff5b07] cursor-pointer rounded"
                   />
                 </th>
-                <th className="px-6 py-4">Image</th>
-                <th className="px-6 py-4">Category Name</th>
-                <th className="px-6 py-4">Slug Path</th>
-                <th className="px-6 py-4">Position</th>
-                <th className="px-6 py-4 text-center">Actions</th>
+                <th className="px-6 py-4 whitespace-nowrap">Image</th>
+                <th className="px-6 py-4 whitespace-nowrap">Category Name</th>
+                <th className="px-6 py-4 whitespace-nowrap">Slug Path</th>
+                <th className="px-6 py-4 whitespace-nowrap">Position</th>
+                <th className="px-6 py-4 whitespace-nowrap text-center">Actions</th>
               </tr>
             </thead>
 
@@ -282,7 +282,7 @@ const Categories: React.FC = () => {
                         />
                       </div>
                     </td>
-                    <td className="px-6 py-4 flex flex-col">
+                    <td className="px-6 py-4 flex flex-col whitespace-nowrap">
                       <span className="text-[14px] font-bold text-slate-700 block">
                         {category?.category_name}
                       </span>

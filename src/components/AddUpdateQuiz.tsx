@@ -744,23 +744,40 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
               Discard
             </button>
             <button
-              type="button"
-              onClick={handleDraft}
-              className="order-2 px-8 py-3 rounded-xl font-bold border-2 border-slate-100 text-slate-600 hover:border-slate-800 hover:text-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <FaSave size={14} /> Save Draft
-            </button>
-            <button
-              onClick={() =>
-                (
-                  document.querySelector("form") as HTMLFormElement
-                )?.requestSubmit()
-              }
-              type="button"
-              className="order-1 sm:order-3 px-10 py-3 rounded-xl font-bold bg-orange-500 text-white shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all active:scale-95 cursor-pointer"
-            >
-              {component_type === 1 ? "Publish Quiz" : "Update Quiz"}
-            </button>
+  disabled={createQuizList?.isPending || updateQuizListAPI?.isPending}
+  type="button"
+  onClick={handleDraft}
+  className="order-2 px-8 py-3 rounded-xl font-bold border-2 border-slate-100 text-slate-600 hover:border-slate-800 hover:text-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+>
+  {createQuizList?.isPending || updateQuizListAPI?.isPending ? (
+    <>
+      <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></div>
+      Saving...
+    </>
+  ) : (
+    <>
+      <FaSave size={14} /> Save Draft
+    </>
+  )}
+</button>
+
+<button
+  onClick={() =>
+    (document.querySelector("form") as HTMLFormElement)?.requestSubmit()
+  }
+  disabled={createQuizList?.isPending || updateQuizListAPI?.isPending}
+  type="button"
+  className="order-1 sm:order-3 px-10 py-3 rounded-xl font-bold bg-orange-500 text-white shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-80 disabled:cursor-not-allowed"
+>
+  {createQuizList?.isPending || updateQuizListAPI?.isPending ? (
+    <>
+      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      Processing...
+    </>
+  ) : (
+    component_type === 1 ? "Publish Quiz" : "Update Quiz"
+  )}
+</button>
           </div>
         </motion.div>
       </div>

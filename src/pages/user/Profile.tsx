@@ -74,8 +74,8 @@ const Profile: React.FC = () => {
       className="w-full"
     >
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+      <div className="flex flex-col items-start justify-start md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <h2 className="md:text-2xl text-[20px] font-bold text-slate-900 flex items-center gap-3">
           <div className="p-2 bg-orange-100 rounded-lg">
             <FaUserCog className="text-[#ff5b07]" size={20} />
           </div>

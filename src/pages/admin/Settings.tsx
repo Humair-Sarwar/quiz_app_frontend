@@ -639,7 +639,7 @@ const [imageShowFooter, setImageShowFooter] = useState<string | null>(websiteSet
 
           <div className="p-8">{renderTabContent()}</div>
 
-          <div className="px-8 py-5 bg-slate-50 border-t border-slate-100 flex justify-end items-center gap-4">
+          <div className="px-8 py-5 bg-slate-50 border-t border-slate-100 flex justify-end flex-col md:flex-row items-center gap-4">
             <button className="px-6 py-2.5 text-slate-500 font-bold text-sm hover:text-slate-800 transition-colors cursor-pointer">
               Discard
             </button>

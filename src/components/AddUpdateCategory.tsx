@@ -308,7 +308,7 @@ const AddUpdateCategory: React.FC<AddUpdateCategoryProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-10 flex gap-4">
+            <div className="mt-10 flex gap-4 flex-col md:flex-row">
               <button
                 type="button"
                 onClick={handleCloseWithAnimation}

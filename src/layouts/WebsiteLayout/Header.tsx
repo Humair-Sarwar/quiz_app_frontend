@@ -38,7 +38,7 @@ const Header: React.FC = () => {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[50] transition-all duration-300 ${
           isScrolled 
           ? "bg-white/80 backdrop-blur-md shadow-sm py-3" 
           : "bg-[#fff5ed] py-5"
@@ -184,8 +184,9 @@ const Header: React.FC = () => {
                 <>
                   <div className="pt-4 pb-2 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Dashboard</div>
                   {userType === 2 && <MobileItem to="/admin/dashboard" label="Admin Dashboard" icon={<TfiDashboard />} onClick={() => setShowMenu(false)} />}
-                  <MobileItem to="/user/quiz-list" label="Solved Quizzes" icon={<CiBoxList />} onClick={() => setShowMenu(false)} />
-                  <MobileItem to="/user/profile-info" label="My Profile" icon={<FaRegUser />} onClick={() => setShowMenu(false)} />
+                  {userType === 1 && (
+                  <><MobileItem to="/user/quiz-list" label="Solved Quizzes" icon={<CiBoxList />} onClick={() => setShowMenu(false)} />
+                  <MobileItem to="/user/profile-info" label="My Profile" icon={<FaRegUser />} onClick={() => setShowMenu(false)} /></>)}
                 </>
               )}
             </ul>

@@ -83,8 +83,8 @@ const Footer: React.FC<FooterProps> = ({ data, isLoading }) => {
                         <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">
                           Phone
                         </span>
-                        <a href={`tel:${data.phone}`} className={linkClass}>
-                          {data.phone}
+                        <a href={`tel:+${data.phone}`} className={linkClass}>
+                          {`+${data.phone}`}
                         </a>
                       </div>
                     </div>

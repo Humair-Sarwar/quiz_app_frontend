@@ -38,11 +38,11 @@ const UserSidebar: React.FC = () => {
                                   data?.data?.image
                                 }`
                               : no_image} alt="User" className="w-10 h-10 rounded-xl object-cover" />
-          <span className="font-black text-slate-800 text-sm">Dashboard</span>
+          <span className="font-black text-slate-800 text-sm mr-4">Dashboard</span>
         </div>
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="p-3 bg-slate-900 text-white rounded-xl active:scale-95 transition-all z-[70]"
+          className="p-3 bg-slate-900 text-white rounded-xl active:scale-95 transition-all z-[15]"
         >
           {isOpen ? <HiOutlineX size={20} /> : <FaBarsStaggered size={20} />}
         </button>
@@ -55,7 +55,7 @@ const UserSidebar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] p-4 bg-white/80 backdrop-blur-lg lg:hidden"
+            className="fixed inset-0 z-[14] p-4 bg-white/80 backdrop-blur-lg mt-20 lg:hidden"
           >
             <motion.div 
               initial={{ y: 20, opacity: 0 }}
@@ -86,7 +86,7 @@ const SidebarContent = ({ navGroups, setIsOpen, data }: { navGroups: any[], setI
     navigate("/login");
   };
   return (
-  <div className="bg-white rounded-[2.5rem] p-6 h-full lg:p-0 overflow-y-auto max-h-screen lg:max-h-none shadow-2xl lg:shadow-none border border-slate-100 lg:border-none">
+  <div className="bg-white rounded-[2.5rem] z-0! relative p-6 h-full lg:p-0 overflow-y-auto max-h-screen lg:max-h-none shadow-2xl lg:shadow-none border border-slate-100 lg:border-none">
     {/* 1. User Mini Card */}
     <div className="mb-10 p-4 bg-slate-50 rounded-[2rem] border border-slate-100/50 flex items-center gap-4">
       <div className="relative">

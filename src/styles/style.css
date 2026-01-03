@@ -492,3 +492,8 @@ color: white;
 .group:hover .animate-marquee {
   animation-play-state: paused;
 }
+
+
+.cat-cl-target-set .react-multiple-carousel__arrow {
+  z-index: 15 !important;
+}
