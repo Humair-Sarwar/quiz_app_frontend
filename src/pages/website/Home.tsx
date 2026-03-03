@@ -95,7 +95,7 @@ const Home: React.FC<HomeProps> = ({ data, isLoading }) => {
 
           {/* Right Image */}
           <motion.div 
-            className="md:w-1/2 flex justify-center relative scale-110 lg:scale-125 transition-transform duration-1000 mb-12 md:mb-0"
+            className="md:w-1/2 flex justify-center relative scale-110 lg:scale-90 transition-transform duration-1000 mb-12 md:mb-0"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1.1 }}
             transition={{ duration: 1 }}
