@@ -128,9 +128,12 @@ const ViewAdminQuizList: React.FC<ImageViewProps> = ({
                       <span className="flex-shrink-0 flex items-center justify-center h-6 w-6 bg-slate-800 text-white rounded-md text-[10px] font-bold">
                         Q{idx + 1}
                       </span>
-                      <h4 className="font-semibold text-slate-800">
-                        {group.question_title}
-                      </h4>
+                      <h4
+  className="font-semibold text-slate-800"
+  dangerouslySetInnerHTML={{
+    __html: group.question_title,
+  }}
+/>
                     </div>
                     <span className="text-[10px] font-bold bg-white px-2 py-1 rounded border border-slate-200 text-slate-400 whitespace-nowrap">
                       {group.question_time}

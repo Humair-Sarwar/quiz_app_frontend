@@ -28,10 +28,17 @@ const CustomerSolvedCheckQ: React.FC<Props> = ({ isVisible, questionGroup }) => 
       {questionGroup.map((question, index) => (
         <div key={index} className="border-b border-gray-100 pb-8 last:border-0">
           {/* Question Title */}
-          <h3 className="text-lg font-bold mb-6 text-slate-800 flex gap-2">
-            <span className="text-orange-500 font-mono">Q{index + 1}.</span>
-            {question.question_title}
-          </h3>
+         <div className="text-lg font-bold mb-6 text-slate-800 flex gap-2">
+  <span className="text-orange-500 font-mono">
+    Q{index + 1}.
+  </span>
+
+  <h3
+    dangerouslySetInnerHTML={{
+      __html: question?.question_title,
+    }}
+  />
+</div>
 
           <div className="space-y-3">
             {question.options?.map((option, optIdx) => {

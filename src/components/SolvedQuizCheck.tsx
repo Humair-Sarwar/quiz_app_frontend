@@ -26,10 +26,18 @@ const SolvedQuizCheck: React.FC<Props> = ({ isVisible, questionGroup }) => {
     <div className="mt-4 transition-all duration-500 ease-in-out">
       {questionGroup.map((question, index) => (
         <div key={index} className="mb-10 border-b border-gray-100 pb-8 last:border-0">
-          <h3 className="text-lg font-bold mb-6 text-slate-800 flex gap-2">
-            <span className="text-orange-500 font-mono">Q{index + 1}.</span>
-            {question.question_title}
-          </h3>
+         <div className="text-lg font-bold mb-6 text-slate-800 flex gap-2">
+  <span className="text-orange-500 font-mono shrink-0">
+    Q{index + 1}.
+  </span>
+
+  <div
+    className="question-content"
+    dangerouslySetInnerHTML={{
+      __html: question.question_title,
+    }}
+  />
+</div>
 
           <div className="space-y-4">
             {question.options.map((option, optIdx) => {
