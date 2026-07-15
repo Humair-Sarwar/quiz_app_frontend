@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Editor, EditorProvider } from 'react-simple-wysiwyg';
 import Overlay from "./Overlay";
 import {
   MdEdit,
@@ -486,99 +487,104 @@ const AddUpdateQuiz: React.FC<AddUpdateQuizProps> = ({
                         <span className="text-sm font-black text-slate-400 uppercase tracking-widest">
                           Question #{i + 1}
                         </span>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              question_group: prev.question_group.filter(
-                                (_, idx) => idx !== i
-                              ),
-                            }))
-                          }
-                          className="text-red-400 hover:text-red-600 p-1 transition-colors cursor-pointer"
-                        >
-                          <IoTrashOutline size={20} />
-                        </button>
-                      </div>
-
-                      <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="md:col-span-2">
-                          <label className="text-xs font-bold text-slate-400 uppercase ml-1 mb-1 block">
-                            Question Text
-                          </label>
-                          <input
-                            placeholder="Type your question here..."
-                            value={qu_group.question_title}
-                            onChange={(e) => {
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2">
+                            <label className="text-xs font-bold text-slate-400 uppercase">
+                              Time Limit
+                            </label>
+                            <select
+                              value={qu_group.question_time}
+                              onChange={(e) => {
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  question_group: prev.question_group.map(
+                                    (q, idx) =>
+                                      idx === i
+                                        ? { ...q, question_time: e.target.value }
+                                        : q
+                                  ),
+                                }));
+                                if (e.target.value && errors.question_group[i]) {
+                                  const newQErrors = [...errors.question_group];
+                                  newQErrors[i].question_time = "";
+                                  setErrors((prev) => ({
+                                    ...prev,
+                                    question_group: newQErrors,
+                                  }));
+                                }
+                              }}
+                              className={`px-3 py-1.5 bg-white rounded-lg border-2 outline-none cursor-pointer text-xs font-medium ${
+                                errors.question_group[i]?.question_time
+                                  ? "border-red-300 bg-red-50/20"
+                                  : "border-slate-200 focus:border-orange-400"
+                              }`}
+                            >
+                              <option value="">Select</option>
+                              <option value="N/A">N/A</option>
+                              <option value="30 sec">30 sec</option>
+                              <option value="1 min">1 min</option>
+                            </select>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() =>
                               setFormData((prev) => ({
                                 ...prev,
-                                question_group: prev.question_group.map(
-                                  (q, idx) =>
-                                    idx === i
-                                      ? { ...q, question_title: e.target.value }
-                                      : q
+                                question_group: prev.question_group.filter(
+                                  (_, idx) => idx !== i
                                 ),
-                              }));
-                              if (e.target.value && errors.question_group[i]) {
-                                const newQErrors = [...errors.question_group];
-                                newQErrors[i].question_title = "";
-                                setErrors((prev) => ({
-                                  ...prev,
-                                  question_group: newQErrors,
-                                }));
-                              }
-                            }}
-                            className={`w-full px-4 py-3 bg-slate-50 rounded-xl border-2 transition-all outline-none font-medium ${
-                              errors.question_group[i]?.question_title
-                                ? "border-red-300 bg-red-50/20"
-                                : "border-transparent focus:border-slate-200 focus:bg-white"
-                            }`}
-                          />
+                              }))
+                            }
+                            className="text-red-400 hover:text-red-600 p-1 transition-colors cursor-pointer"
+                          >
+                            <IoTrashOutline size={20} />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <div>
+                          <label className="text-xs font-bold text-slate-400 uppercase ml-1 mb-2 block">
+                            Question Text
+                          </label>
+                          <div className={`rounded-xl border-2 transition-all overflow-hidden ${
+                            errors.question_group[i]?.question_title
+                              ? "border-red-300 bg-red-50/20"
+                              : "border-slate-200 bg-white focus-within:border-orange-400"
+                          }`}>
+                            <EditorProvider>
+                              <Editor
+                                value={qu_group.question_title}
+                                onChange={(e) => {
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    question_group: prev.question_group.map(
+                                      (q, idx) =>
+                                        idx === i
+                                          ? { ...q, question_title: e.target.value }
+                                          : q
+                                    ),
+                                  }));
+                                  if (e.target.value && errors.question_group[i]) {
+                                    const newQErrors = [...errors.question_group];
+                                    newQErrors[i].question_title = "";
+                                    setErrors((prev) => ({
+                                      ...prev,
+                                      question_group: newQErrors,
+                                    }));
+                                  }
+                                }}
+                                placeholder="Type your question here..."
+                                containerProps={{ className: 'min-h-[120px]' }}
+                              />
+                            </EditorProvider>
+                          </div>
                           {renderError(
                             errors.question_group[i]?.question_title
                           )}
                         </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-400 uppercase ml-1 mb-1 block">
-                            Time Limit
-                          </label>
-                          <select
-                            value={qu_group.question_time}
-                            onChange={(e) => {
-                              setFormData((prev) => ({
-                                ...prev,
-                                question_group: prev.question_group.map(
-                                  (q, idx) =>
-                                    idx === i
-                                      ? { ...q, question_time: e.target.value }
-                                      : q
-                                ),
-                              }));
-                              if (e.target.value && errors.question_group[i]) {
-                                const newQErrors = [...errors.question_group];
-                                newQErrors[i].question_time = "";
-                                setErrors((prev) => ({
-                                  ...prev,
-                                  question_group: newQErrors,
-                                }));
-                              }
-                            }}
-                            className={`w-full px-4 py-3 bg-slate-50 rounded-xl border-2 outline-none cursor-pointer ${
-                              errors.question_group[i]?.question_time
-                                ? "border-red-300 bg-red-50/20"
-                                : "border-transparent focus:border-slate-200"
-                            }`}
-                          >
-                            <option value="">Select</option>
-                            <option value="N/A">N/A</option>
-                            <option value="30 sec">30 sec</option>
-                            <option value="1 min">1 min</option>
-                          </select>
-                          {renderError(errors.question_group[i]?.question_time)}
-                        </div>
 
-                        <div className="md:col-span-3 space-y-3">
+                        <div className="space-y-3">
                           <div className="flex justify-between items-center px-1">
                             <span className="text-sm font-bold text-slate-700">
                               Answer Options

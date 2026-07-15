@@ -164,7 +164,9 @@ const QuizPopup: React.FC<{ onClose: () => void; quiz_id: string; user_attempted
                   <span className="text-xs font-black text-[#ff5b07] uppercase">Question {currentIndex + 1} of {questions.length}</span>
                   <ProgressBar progress={((currentIndex + 1) / questions.length) * 100} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 mb-8">{currentQuestion?.question_title}</h3>
+                <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 mb-8" dangerouslySetInnerHTML={{
+    __html: currentQuestion?.question_title,
+  }}/>
                 <div className="grid grid-cols-1 gap-4 mb-10">
                   {currentQuestion?.options.map((option: any, index: number) => {
                     const isSelected = userAnswers[currentIndex]?.selected_label === option.option_label;
@@ -248,7 +250,9 @@ const ResultView = ({ result, isReview, setIsReview, onClose, onRetake, isRetaki
             {result?.detailed_questions?.map((q: any, idx: number) => (
               <div key={idx} className="p-6 rounded-[2rem] border border-slate-100 bg-white shadow-sm mb-4">
                 <p className="text-[#ff5b07] text-[10px] font-black uppercase mb-2">Question {idx + 1}</p>
-                <h4 className="font-bold text-slate-800 mb-6 text-lg">{q.question_title}</h4>
+                <h4 className="font-bold text-slate-800 mb-6 text-lg" dangerouslySetInnerHTML={{
+    __html: q?.question_title,
+  }}/>
                 <div className="flex flex-col gap-3 mb-6">
                   {q.all_options.map((opt: any, i: number) => {
                     const isUserChoice = q.user_choice === opt.label;
